@@ -1,0 +1,96 @@
+* {
+  font-size: 1.1rem;
+}
+
+.App {
+  text-align: left;
+  position: relative;
+
+  .Checked {
+    background-color: #26f17b;
+  }
+
+  .Checking {
+    background-color: #e69318;
+  }
+
+  .InProgress {
+    background-color: #e3f126;
+  }
+
+  .ToDo {
+    background-color: #bbbaba;
+  }
+
+  .failed {
+    background-color: #f12626;
+  }
+
+  .table {
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .studentName {
+    background-color: #59b3fc;
+  }
+
+  .css-10nd86i {
+    position: absolute;
+    top: 30px;
+    left: 20%;
+    width: 60%;
+  }
+
+  td {
+    min-height: 25px;
+  }
+
+  .link {
+    padding-left: 4px;
+    padding-right: 4px;
+    text-decoration: none;
+    color: black;
+  }
+
+  .mentor-table {
+    position: absolute;
+    top: 80px;
+    text-align: center;
+  }
+
+  .task-table {
+    position: absolute;           
+    top: 140px;
+    
+    .taskName {
+      min-width: 250px;
+    }
+  }
+
+  .description-table {
+    position: absolute;
+    top: 520px;
+
+    .description-table__cell {
+      min-width: 180px;
+      padding-left: 10px; 
+    }
+  }
+
+  .cell {
+    min-width: 100px;
+    text-align: center;
+  }
+
+  .mentorTitle,
+  .mentorName {
+    min-width: 300px;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  .taskName {
+    text-align: left;
+  }
+}
