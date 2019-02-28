@@ -39,6 +39,7 @@ const fieldMappingScore = {
   studentGithub: 'C',
   task: 'D',
   score: 'F',
+  pr: 'E',
 };
 
 const fieldMappingStatus = {
@@ -82,6 +83,9 @@ const getScore = (sheet, currentRow) => {
     tasks: {
       [sheet[fieldMappingScore.task + currentRow].v]: sheet[fieldMappingScore.score + currentRow].v,
     },
+    prLinks: {
+      [sheet[fieldMappingScore.task + currentRow].v]: sheet[fieldMappingScore.pr + currentRow].v,
+    },
   };
   return studentData;
 };
@@ -96,6 +100,8 @@ const getTasks = (sheet) => {
     } else {
       const key = Object.keys(student.tasks)[0];
       studentsList.get(student.studentName).tasks[key] = student.tasks[key];
+      const keyPr = Object.keys(student.prLinks)[0];
+      studentsList.get(student.studentName).prLinks[keyPr] = student.prLinks[key];
     }
 
     // eslint-disable-next-line

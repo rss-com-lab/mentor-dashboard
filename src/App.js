@@ -46,10 +46,23 @@ function getScore(studentName, mentor, currentTaskName) {
     data.mentors[mentor].mentorStudents[studentName],
   );
   const score = Object.entries(getStudentUrl)[3][1][currentTaskName];
-  if (!score) {
-    return ' ';
+    if (score) {
+     return score;
+  } 
+  // return score;
+}
+
+function getPrTask(studentName, mentor, currentTaskName) {
+  const getStudentUrl = Object.values(
+    data.mentors[mentor].mentorStudents[studentName],
+  );
+  const pr = Object.entries(getStudentUrl)[4][1][currentTaskName];
+  const score = Object.entries(getStudentUrl)[3][1][currentTaskName];
+
+  if (!score || score === 0) {
+    return '#';
   }
-  return score;
+  return pr;
 }
 
 function getCurrentMentor(mentor) {
@@ -90,8 +103,10 @@ function setStudent(mentor) {
 
 function setScore(mentor, name) {
   return getStudent(mentor).map(studentName => (
-    <td style={{ minWidth: '100px', textAlign: 'center' }} className={getScore(studentName, getCurrentMentor(mentor), name) <= 0 && getTaskStatus(name) === 'Checked' ? 'failed' : getTaskStatus(name)} key={studentName}>
-      {getScore(studentName, getCurrentMentor(mentor), name)}
+    <td style={{ minWidth: '100px', textAlign: 'center' }} className={!getScore(studentName, getCurrentMentor(mentor), name) && getTaskStatus(name) === 'Checked' ? 'failed' : getTaskStatus(name)} key={studentName}><a
+      className="link" href={getPrTask(studentName, getCurrentMentor(mentor), name)}
+    >{getScore(studentName, getCurrentMentor(mentor), name)}
+    </a>
     </td>
   ));
 }
