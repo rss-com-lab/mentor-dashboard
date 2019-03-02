@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // import React, { Component } from 'react';
 import './App.scss';
-import React, { Col } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import data from './data.json';
 
@@ -26,6 +26,15 @@ const taskName = Object.entries(data)[1][1];
 function getTaskName(name) {
   const getUrl = Object.values(taskName[name]);
   return getUrl[2];
+}
+
+function getStatistics(name) {
+  const commonCountTask = Object.entries(data)[2][1];
+  const countCurrentTask = Object.values(taskName[name]);
+  const percent = countCurrentTask[3] / commonCountTask * 100;
+  if (percent > 0) {
+    return Math.round(percent)+' %';
+  }
 }
 
 function getTaskStatus(name) {
@@ -58,9 +67,11 @@ function getPrTask(studentName, mentor, currentTaskName) {
   );
   const pr = Object.entries(getStudentUrl)[4][1][currentTaskName];
   const score = Object.entries(getStudentUrl)[3][1][currentTaskName];
-
-  if (!score || score === 0) {
+  if (getTaskStatus(currentTaskName) === 'Checking') {
     return '#';
+  }
+  if (!score || score === 0) {
+    return ;
   }
   return pr;
 }
@@ -92,7 +103,7 @@ function setStudent(mentor) {
   return getStudent(mentor).map(studentName => (
     <td className="studentName cell" key={studentName}>
       <a
-        className="link"
+        className="link" rel="noopener noreferrer" target="_blank"
         href={getStudenName(studentName, getCurrentMentor(mentor))}
       >
         {studentName}
@@ -104,8 +115,8 @@ function setStudent(mentor) {
 function setScore(mentor, name) {
   return getStudent(mentor).map(studentName => (
     <td style={{ textAlign: 'center' }} className={!getScore(studentName, getCurrentMentor(mentor), name) && getTaskStatus(name) === 'Checked' ? 'failed' : getTaskStatus(name)} key={studentName}><a
-      className="link" href={getPrTask(studentName, getCurrentMentor(mentor), name)}
-    >{getScore(studentName, getCurrentMentor(mentor), name)}
+      className="link" rel="noopener noreferrer" target="_blank" href={getPrTask(studentName, getCurrentMentor(mentor), name)}
+    >{getScore(studentName, getCurrentMentor(mentor), name)} 
     </a>
     </td>
   ));
@@ -115,9 +126,12 @@ function setTask(mentor) {
   return task.map(name => (
     <tr key={name}>
       <td className={getTaskStatus(name)}>
-        <a className="link taskname" href={getTaskName(name)}>
+        <a className="link taskname" rel="noopener noreferrer" target="_blank" href={getTaskName(name)}>
           {name}
         </a>
+      </td>
+      <td className={getTaskStatus(name)} style={{ textAlign: 'center' }}>
+        {getStatistics(name)}
       </td>
       {setScore(mentor, name)}
     </tr>
@@ -159,6 +173,9 @@ class App extends React.Component {
           <thead>
             <tr>
               <td />
+              <td className="statistics cell">
+                statistics
+              </td>
               {setStudent(selectedOption)}
             </tr>
           </thead>
@@ -167,7 +184,7 @@ class App extends React.Component {
           </tbody>
         </table>
         </div>
-        {/* <Col xs="12" sm="6" md="6" lg="4"> */}
+      
         <table className="table description-table">
           <tbody className="tbody">
             <tr>
@@ -192,7 +209,6 @@ class App extends React.Component {
             </tr>
           </tbody>
         </table>
-        {/* </Col> */}
 
       </div>
       

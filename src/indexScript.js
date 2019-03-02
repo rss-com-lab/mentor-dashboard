@@ -1,20 +1,22 @@
 /* eslint-disable no-console */
-const fs = require('fs');
+const fs = require("fs");
 
 // eslint-disable-next-line
-if (typeof require !== 'undefined') XLSX = require('xlsx');
+if (typeof require !== "undefined") XLSX = require("xlsx");
 
 // eslint-disable-next-line
-const studentMentorPair = XLSX.readFile('./src/data/Mentor-students pairs.xlsx');
+const studentMentorPair = XLSX.readFile(
+  "./src/data/Mentor-students pairs.xlsx"
+);
 const sheetPairs = studentMentorPair.Sheets.pairs;
-const sheetMentors = studentMentorPair.Sheets['second_name-to_github_account'];
+const sheetMentors = studentMentorPair.Sheets["second_name-to_github_account"];
 
 // eslint-disable-next-line
-const studentList = XLSX.readFile('./src/data/Mentor score.xlsx');
-const sheetScore = studentList.Sheets['Form Responses 1'];
+const studentList = XLSX.readFile("./src/data/Mentor score.xlsx");
+const sheetScore = studentList.Sheets["Form Responses 1"];
 
 // eslint-disable-next-line
-const taskStatus = XLSX.readFile('./src/data/Tasks.xlsx');
+const taskStatus = XLSX.readFile("./src/data/Tasks.xlsx");
 const sheetStatus = taskStatus.Sheets.Sheet1;
 
 const mentorsList = new Map();
@@ -22,30 +24,33 @@ const studentsList = new Map();
 const mentorsResult = {};
 const statusResult = {};
 const finalStructure = {};
+// const tasksCount = {};
+
+let taskCount = 0;
 
 const fieldMappingPairs = {
-  mentorName: 'A',
-  studentName: 'B',
+  mentorName: "A",
+  studentName: "B"
 };
 
 const fieldMappingMentor = {
-  name: 'A',
-  Surname: 'B',
-  Github: 'E',
+  name: "A",
+  Surname: "B",
+  Github: "E"
 };
 
 const fieldMappingScore = {
-  mentorGithub: 'B',
-  studentGithub: 'C',
-  task: 'D',
-  score: 'F',
-  pr: 'E',
+  mentorGithub: "B",
+  studentGithub: "C",
+  task: "D",
+  score: "F",
+  pr: "E"
 };
 
 const fieldMappingStatus = {
-  taskName: 'A',
-  taskStatus: 'C',
-  taskLink: 'B',
+  taskName: "A",
+  taskStatus: "C",
+  taskLink: "B"
 };
 
 // eslint-disable-next-line
@@ -55,16 +60,20 @@ const getMentor = (sheet, currentRow) => {
   const mentorData = {
     name: sheet[fieldMappingMentor.name + currentRow].v,
     Surname: sheet[fieldMappingMentor.Surname + currentRow].v,
-    ID: `${sheet[fieldMappingMentor.name + currentRow].v} ${sheet[fieldMappingMentor.Surname + currentRow].v}`,
+    ID: `${sheet[fieldMappingMentor.name + currentRow].v} ${
+      sheet[fieldMappingMentor.Surname + currentRow].v
+    }`,
     Github: sheet[fieldMappingMentor.Github + currentRow].v,
-    GithubLogin: sheet[fieldMappingMentor.Github + currentRow].v.split(loginPattern)[1],
-    mentorStudents: {},
+    GithubLogin: sheet[fieldMappingMentor.Github + currentRow].v.split(
+      loginPattern
+    )[1],
+    mentorStudents: {}
   };
 
   return mentorData;
 };
 
-const getMentors = (sheet) => {
+const getMentors = sheet => {
   let count = 2;
   while (sheet[fieldMappingMentor.Github + count]) {
     const mentor = getMentor(sheet, count);
@@ -79,18 +88,22 @@ const getScore = (sheet, currentRow) => {
   const studentData = {
     mentorGithub: sheet[fieldMappingScore.mentorGithub + currentRow].v,
     studentGithub: sheet[fieldMappingScore.studentGithub + currentRow].v,
-    studentName: sheet[fieldMappingScore.studentGithub + currentRow].v.split(loginPattern)[1].toLowerCase(),
+    studentName: sheet[fieldMappingScore.studentGithub + currentRow].v
+      .split(loginPattern)[1]
+      .toLowerCase(),
     tasks: {
-      [sheet[fieldMappingScore.task + currentRow].v]: sheet[fieldMappingScore.score + currentRow].v,
+      [sheet[fieldMappingScore.task + currentRow].v]:
+        sheet[fieldMappingScore.score + currentRow].v
     },
     prLinks: {
-      [sheet[fieldMappingScore.task + currentRow].v]: sheet[fieldMappingScore.pr + currentRow].v,
-    },
+      [sheet[fieldMappingScore.task + currentRow].v]:
+        sheet[fieldMappingScore.pr + currentRow].v
+    }
   };
   return studentData;
 };
 
-const getTasks = (sheet) => {
+const getTasks = sheet => {
   let count = 2;
   while (sheet[fieldMappingScore.mentorGithub + count]) {
     const student = getScore(sheet, count);
@@ -101,7 +114,8 @@ const getTasks = (sheet) => {
       const key = Object.keys(student.tasks)[0];
       studentsList.get(student.studentName).tasks[key] = student.tasks[key];
       const keyPr = Object.keys(student.prLinks)[0];
-      studentsList.get(student.studentName).prLinks[keyPr] = student.prLinks[key];
+      studentsList.get(student.studentName).prLinks[keyPr] =
+        student.prLinks[key];
     }
 
     // eslint-disable-next-line
@@ -109,19 +123,38 @@ const getTasks = (sheet) => {
   }
 };
 
-const getStatusTask = (sheet, currentRow) => {
+const getCountTask = (sheet, nameTask) => {
+  let count = 2;
+  let countTask = 0;
+  while (sheet[fieldMappingScore.mentorGithub + count]) {
+    if (sheet[fieldMappingScore.task + count].v === nameTask) {
+      countTask++;
+    }
+    // eslint-disable-next-line
+    count++;
+  }
+  return countTask;
+};
+
+const getStatusTask = (sheet, currentRow, sheetStudent) => {
   const taskData = {
     taskName: sheet[fieldMappingStatus.taskName + currentRow].v.trim(),
     taskStatus: sheet[fieldMappingStatus.taskStatus + currentRow].v,
-    taskLink: sheet[fieldMappingStatus.taskLink + currentRow] ? sheet[fieldMappingStatus.taskLink + currentRow].v : 'no link',
+    taskLink: sheet[fieldMappingStatus.taskLink + currentRow]
+      ? sheet[fieldMappingStatus.taskLink + currentRow].v
+      : "no link",
+    taskCount: getCountTask(
+      sheetStudent,
+      sheet[fieldMappingStatus.taskName + currentRow].v.trim()
+    )
   };
   return taskData;
 };
 
-const getStatus = (sheet) => {
+const getStatus = (sheet, sheetStudent) => {
   let count = 2;
   while (sheet[fieldMappingStatus.taskName + count]) {
-    const status = getStatusTask(sheet, count);
+    const status = getStatusTask(sheet, count, sheetStudent);
 
     statusResult[status.taskName] = status;
     // eslint-disable-next-line
@@ -132,13 +165,13 @@ const getStatus = (sheet) => {
 const getPair = (sheet, currentRow) => {
   const pair = {
     mentorName: sheet[fieldMappingPairs.mentorName + currentRow].v,
-    studentName: sheet[fieldMappingPairs.studentName + currentRow].v,
+    studentName: sheet[fieldMappingPairs.studentName + currentRow].v
   };
 
   return pair;
 };
 
-const getPairs = (sheet) => {
+const getPairs = sheet => {
   let count = 2;
   while (sheet[fieldMappingPairs.mentorName + count]) {
     const pair = getPair(sheet, count);
@@ -147,11 +180,12 @@ const getPairs = (sheet) => {
 
     if (student) {
       mentor.mentorStudents[student.studentName] = student;
-    // } else {
-    //   mentor.mentorStudents[pair.studentName] = {
-    //     studentName: pair.studentName,
-    //     tasks: {},
-    //   };
+      taskCount++;
+      // } else {
+      //   mentor.mentorStudents[pair.studentName] = {
+      //     studentName: pair.studentName,
+      //     tasks: {},
+      //   };
     }
 
     mentorsResult[mentor.GithubLogin] = mentor;
@@ -162,18 +196,19 @@ const getPairs = (sheet) => {
 
 getMentors(sheetMentors);
 getTasks(sheetScore);
-getStatus(sheetStatus);
+getStatus(sheetStatus, sheetScore);
 getPairs(sheetPairs);
 
 // FINAL RESULT **********************
 
 finalStructure.mentors = mentorsResult;
 finalStructure.tasksStatus = statusResult;
+finalStructure.taskCount = taskCount;
 
 // +++++++++++++++++++++++++++++++++
 
 const json = JSON.stringify(finalStructure, 0, 2);
 
-fs.writeFile('./src/data.json', json, 'utf8', () => {
-  console.log('JSON is done!');
+fs.writeFile("./src/data.json", json, "utf8", () => {
+  console.log("JSON is done!");
 });

@@ -8129,52 +8129,63 @@
     "Code Jam \"CV\"": {
       "taskName": "Code Jam \"CV\"",
       "taskStatus": "Checked",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-cv.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-cv.md",
+      "taskCount": 348
     },
     "Code Jam \"CoreJS\"": {
       "taskName": "Code Jam \"CoreJS\"",
       "taskStatus": "Checked",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-corejs.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-corejs.md",
+      "taskCount": 372
     },
     "Code Jam \"DOM, DOM Events\"": {
       "taskName": "Code Jam \"DOM, DOM Events\"",
       "taskStatus": "Checked",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-notification.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-notification.md",
+      "taskCount": 314
     },
     "Markup #1": {
       "taskName": "Markup #1",
       "taskStatus": "Checking",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/markup-2018q3.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/markup-2018q3.md",
+      "taskCount": 326
     },
     "RS Activist": {
       "taskName": "RS Activist",
       "taskStatus": "In Progress",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/rs-school-activist.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/rs-school-activist.md",
+      "taskCount": 30
     },
     "YouTube": {
       "taskName": "YouTube",
       "taskStatus": "Checking",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/youtube.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/youtube.md",
+      "taskCount": 182
     },
-    "CodeJam \"Scoreboard\"": {
-      "taskName": "CodeJam \"Scoreboard\"",
+    "Code Jam \"Scoreboard\"": {
+      "taskName": "Code Jam \"Scoreboard\"",
       "taskStatus": "Checking",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-scoreboard.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-scoreboard.md",
+      "taskCount": 110
     },
     "Game": {
       "taskName": "Game",
       "taskStatus": "In Progress",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/game.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/game.md",
+      "taskCount": 0
     },
     "Presentation": {
       "taskName": "Presentation",
       "taskStatus": "Checked",
-      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/presentation.md"
+      "taskLink": "https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/presentation.md",
+      "taskCount": 182
     },
     "Course work": {
       "taskName": "Course work",
       "taskStatus": "ToDo",
-      "taskLink": "no link"
+      "taskLink": "no link",
+      "taskCount": 0
     }
-  }
+  },
+  "taskCount": 382
 }

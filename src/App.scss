@@ -189,6 +189,10 @@
     }
   }
 
+  .statistics {
+    background-color: #db59fc;
+  }
+
   .studentName {
     background-color: #59b3fc;
   }
@@ -198,6 +202,9 @@
   }
 
   .link {
+    display: block;
+    min-width: 90px;
+    min-height: 17px;
     padding-left: 4px;
     padding-right: 4px;
     text-decoration: none;
