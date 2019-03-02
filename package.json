@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/rss-com-lab/mentor-dashboard/issues"
   },
-  "homepage": "https://petriken.github.io/rss-mentor-dashboard",
+  "homepage": "https://rss-com-lab.github.io/mentor-dashboard",
   "eslintConfig": {
     "extends": "react-app"
   },

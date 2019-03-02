@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // import React, { Component } from 'react';
 import './App.scss';
-import React from 'react';
+import React, { Col } from 'react';
 import Select from 'react-select';
 import data from './data.json';
 
@@ -103,7 +103,7 @@ function setStudent(mentor) {
 
 function setScore(mentor, name) {
   return getStudent(mentor).map(studentName => (
-    <td style={{ minWidth: '100px', textAlign: 'center' }} className={!getScore(studentName, getCurrentMentor(mentor), name) && getTaskStatus(name) === 'Checked' ? 'failed' : getTaskStatus(name)} key={studentName}><a
+    <td style={{ textAlign: 'center' }} className={!getScore(studentName, getCurrentMentor(mentor), name) && getTaskStatus(name) === 'Checked' ? 'failed' : getTaskStatus(name)} key={studentName}><a
       className="link" href={getPrTask(studentName, getCurrentMentor(mentor), name)}
     >{getScore(studentName, getCurrentMentor(mentor), name)}
     </a>
@@ -114,8 +114,8 @@ function setScore(mentor, name) {
 function setTask(mentor) {
   return task.map(name => (
     <tr key={name}>
-      <td style={{ minWidth: '280px' }} className={getTaskStatus(name)}>
-        <a className="link" href={getTaskName(name)}>
+      <td className={getTaskStatus(name)}>
+        <a className="link taskname" href={getTaskName(name)}>
           {name}
         </a>
       </td>
@@ -138,6 +138,7 @@ class App extends React.Component {
     const { selectedOption } = this.state;
 
     return (
+      
       <div className="App">
         <Select
           value={selectedOption}
@@ -153,8 +154,8 @@ class App extends React.Component {
             </tr>
           </thead>
         </table>
-
-        <table className="table task-table">
+<div className="wrapper">
+        <table align="center" className="table task-table">
           <thead>
             <tr>
               <td />
@@ -165,7 +166,8 @@ class App extends React.Component {
             {setTask(selectedOption)}
           </tbody>
         </table>
-
+        </div>
+        {/* <Col xs="12" sm="6" md="6" lg="4"> */}
         <table className="table description-table">
           <tbody className="tbody">
             <tr>
@@ -190,7 +192,10 @@ class App extends React.Component {
             </tr>
           </tbody>
         </table>
+        {/* </Col> */}
+
       </div>
+      
     );
   }
 }
