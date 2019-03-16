@@ -1,15 +1,21 @@
 import * as firebase from 'firebase/app';
-require('dotenv').config({ path: '../.env' });
+
+const API_KEY = 'AIzaSyCX-HtE8YASWxl9k6DpQblWdLOvzsEgqUs';
+const AUTH_DOMAIN = 'rss-mentor-dashboard-2185d.firebaseapp.com';
+const DATABASE_URL = 'https://rss-mentor-dashboard-2185d.firebaseio.com';
+const PROJECT_ID = 'rss-mentor-dashboard-2185d';
+const STORAGE_BUCKET = 'rss-mentor-dashboard-2185d.appspot.com';
+const MESSAGING_SENDER_ID = 569694467315;
 
 class FireBase {
   static init() {
     const config = {
-      apiKey: process.env.API_KEY,
-      authDomain: process.env.AUTH_DOMAIN,
-      databaseURL: process.env.DATABASE_URL,
-      projectId: process.env.PROJECT_ID,
-      storageBucket: process.env.STORAGE_BUCKET,
-      messagingSenderId: process.env.MESSAGING_SENDER_ID,
+      apiKey: API_KEY,
+      authDomain: AUTH_DOMAIN,
+      databaseURL: DATABASE_URL,
+      projectId: PROJECT_ID,
+      storageBucket: STORAGE_BUCKET,
+      messagingSenderId: MESSAGING_SENDER_ID,
     };
     firebase.initializeApp(config);
   }
