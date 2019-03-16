@@ -1,9 +1,14 @@
 /* eslint-disable no-console */
 // import React, { Component } from 'react';
 import "./App.scss";
-import React from "react";
+import React, { Fragment } from "react";
 import Select from "react-select";
 import data from "./data.json";
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import FireBase from './firebase';
+
+FireBase.init();
 
 const mentorsList = [];
 const dataFile = Object.keys(data.mentors);
@@ -160,20 +165,36 @@ function setTask(mentor) {
 }
 
 class App extends React.Component {
-  state = {
-    selectedOption: null
-  };
+  constructor() {
+    super();
+
+    this.database = firebase.database().ref().child('JSONData');
+
+    this.state = {
+      selectedOption: null,
+      database: null,
+    };
+  }
 
   handleChange = selectedOption => {
     this.setState({ selectedOption });
     localStorage.setItem("currentMentor", selectedOption.value);
   };
 
+  componentDidMount = () => {
+    this.database.on('value', (snap) => {
+      this.setState({
+        database: snap.val(),
+      });
+    });
+  }
+
   render() {
-    const { selectedOption } = this.state;
+    const { selectedOption, database } = this.state;
 
     return (
-      <div className="App">
+      <Fragment>
+      {database? <div className="App">
         <Select
           value={selectedOption}
           onChange={this.handleChange}
@@ -225,7 +246,8 @@ class App extends React.Component {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> : null}
+      </Fragment>
     );
   }
 }
