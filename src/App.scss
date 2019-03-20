@@ -1,0 +1,204 @@
+.App {
+  text-align: left;
+  position: relative;
+  margin: 0 auto;
+
+  .Checked {
+    background-color: #26f17b;
+  }
+
+  .Checking {
+    background-color: #e69318;
+  }
+
+  .InProgress {
+    background-color: #e3f126;
+  }
+
+  .ToDo {
+    background-color: #bbbaba;
+  }
+
+  .failed {
+    background-color: #f12626;
+  }
+
+  .dismissed {
+    opacity: 0.4;
+  }
+
+  @media screen and (min-width: 1200px) {
+    * {
+      font-size: 1.3rem;
+    }
+
+    .wrapper {
+      margin: auto;
+      padding-top: 1%;
+      min-width: 1200px;
+      max-width: 95%;
+    }
+
+    .mentor-table {
+      margin: auto;
+      padding-top: 1%;
+      text-align: center;
+    }
+
+    .mentorTitle,
+    .mentorName {
+      min-width: 300px;
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+
+    .description-table {
+      margin: auto;
+      padding-top: 2%;
+
+      .description-table__cell {
+        min-width: 180px;
+        padding-left: 10px;
+      }
+    }
+
+    .css-10nd86i {
+      padding-top: 2%;
+      margin: auto;
+      width: 60%;
+    }
+
+    .cell {
+      min-width: 100px;
+      text-align: center;
+    }
+  }
+
+  @media screen and (max-width: 1199px) and (min-width: 600px) {
+    * {
+      font-size: 0.9rem;
+    }
+
+    .mentor-table {
+      padding-top: 1%;
+      margin: auto;
+      text-align: center;
+    }
+
+    .mentorTitle,
+    .mentorName {
+      min-width: 300px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+
+    .wrapper {
+      padding-top: 1%;
+      margin: auto;
+      min-width: 600px;
+      max-width: 90%;
+      overflow-x: auto;
+      table-layout: fixed;
+      top: 140px;
+    }
+
+    .description-table {
+      padding-top: 2%;
+      margin: auto;
+
+      .description-table__cell {
+        min-width: 150px;
+        padding-left: 10px;
+      }
+    }
+
+    .css-10nd86i {
+      padding-top: 3%;
+      margin: auto;
+      width: 80%;
+    }
+
+    .cell {
+      min-width: 70px;
+      text-align: center;
+    }
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 300px) {
+    .mentor-table {
+      margin: auto;
+      margin-top: 5%;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .wrapper {
+      padding-top: 5%;
+      min-width: 300px;
+      max-width: 90%;
+      overflow-x: auto;
+      margin: auto;
+      table-layout: fixed;
+    }
+
+    .mentorTitle,
+    .mentorName {
+      min-width: 40%;
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+
+    .css-10nd86i {
+      padding-top: 5%;
+      margin: auto;
+      width: 80%;
+    }
+
+    .description-table {
+      padding-top: 5%;
+      margin: auto;
+      position: relative;
+
+      .description-table__cell {
+        min-width: 100px;
+        padding-left: 10px;
+      }
+    }
+
+    .cell {
+      min-width: 62px;
+      text-align: center;
+      word-wrap: break-word;
+    }
+
+    * {
+      font-size: 0.8rem;
+    }
+  }
+
+  .statistics, 
+  .check_time {
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+    background-color: #db59fc;
+  }
+
+  .studentName {
+    background-color: #59b3fc;
+  }
+
+  td {
+    min-height: 25px;
+  }
+
+  .link {
+    display: block;
+    min-width: 90px;
+    min-height: 17px;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-decoration: none;
+    color: black;
+  }
+}
