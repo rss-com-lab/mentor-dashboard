@@ -26,7 +26,7 @@ const statusResult = {};
 const finalStructure = {};
 let dismissedStudents = [];
 let countStudent = 0;
-const tasksCount = {};
+// const tasksCount = {};
 
 let taskCount = 0;
 
@@ -48,6 +48,7 @@ const fieldMappingScore = {
   score: "F",
   pr: "E",
   action: "H",
+  reasonDismiss: "I",
 };
 
 const fieldMappingStatus = {
@@ -114,7 +115,9 @@ const getScore = (sheet, currentRow) => {
     studentStatus: '',
   };
   if
-    (sheet[fieldMappingScore.action + currentRow] && sheet[fieldMappingScore.action + currentRow].v === "Отчислить студента") { dismissedStudents.push(studentData.studentName) };
+    (sheet[fieldMappingScore.action + currentRow] && sheet[fieldMappingScore.action + currentRow].v === "Отчислить студента") {
+      dismissedStudents.push(studentData.studentName)
+  };
   return studentData;
 };
 
@@ -133,7 +136,10 @@ const getTasks = sheet => {
       studentsList.get(student.studentName).prLinks[keyPr] =
         student.prLinks[key];
     }
-    if (dismissedStudents.indexOf(studentsList.get(student.studentName).studentName) !== -1) { studentsList.get(student.studentName).studentStatus = 'dismissed' }
+    if (dismissedStudents.indexOf(studentsList.get(student.studentName).studentName) !== -1) {
+      studentsList.get(student.studentName).studentStatus = 'dismissed';
+      if (sheet[fieldMappingScore.reasonDismiss + count]) { studentsList.get(student.studentName).reasonDismiss = sheet[fieldMappingScore.reasonDismiss + count].v };
+    }
     else { studentsList.get(student.studentName).studentStatus = 'active' };
     // eslint-disable-next-line
     count++;

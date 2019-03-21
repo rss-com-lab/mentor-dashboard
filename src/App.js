@@ -25,12 +25,15 @@ const taskName = Object.entries(data)[1][1];
 
 function getTaskName(name) {
   const getUrl = Object.values(taskName[name]);
-  return getUrl[2];
+  if (getUrl[2] !== "no link")
+  { return getUrl[2] };
 }
+
 function getCheckTaskTime(name) {
   const CheckTaskTime = Object.values(taskName[name])[4];
   return CheckTaskTime;
 }
+
 function getStatistics(name) {
   const commonCountTask = Object.entries(data)[2][1];
   const countCurrentTask = Object.values(taskName[name]);
@@ -63,14 +66,26 @@ function getScore(studentName, mentor, currentTaskName) {
   }
 }
 
-function getStudentStatus(mentor, studentName) {
+// function getStudentStatus(mentor, studentName) {
+//   const studentsStatus = Object.values(
+//     data.mentors[mentor].mentorStudents[studentName]
+//   )[5];
+//   if (studentsStatus === "dismissed") {
+//     return studentsStatus + " studentName cell";
+//   }
+//   return "studentName cell";
+// }
+
+function setTooltip(mentor, studentName) {
   const studentsStatus = Object.values(
     data.mentors[mentor].mentorStudents[studentName]
   )[5];
+  const reasonDismiss = Object.values(
+    data.mentors[mentor].mentorStudents[studentName]
+  )[6];
   if (studentsStatus === "dismissed") {
-    return studentsStatus + " studentName cell";
+    return reasonDismiss;
   }
-  return "studentName cell";
 }
 
 function getPrTask(studentName, mentor, currentTaskName) {
@@ -140,8 +155,10 @@ function setClass(studentName, mentor, name) {
 function setStudent(mentor) {
   return getStudent(mentor).map(studentName => (
     <td
-      className={getStudentStatus(getCurrentMentor(mentor), studentName)}
+      className='studentName cell'
       key={studentName}
+      tooltip={setTooltip(getCurrentMentor(mentor), studentName)}
+
     >
       <a
         className="link"
