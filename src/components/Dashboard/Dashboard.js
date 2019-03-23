@@ -2,11 +2,31 @@ import "./Dashboard.scss";
 import React from "react";
 import Select from "react-select";
 import { mentorsList, getCurrentMentor, setStudent, setTask } from './parser';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import FireBase from '../../firebase/firebase';
+
+FireBase.init();
 
 class Dashboard extends React.Component {
-  state = {
-    selectedOption: null
-  };
+  constructor() {
+    super();
+
+    this.database = firebase.database().ref().child('JSONData');
+
+    this.state = {
+      selectedOption: null,
+      database: null,
+    };
+  }
+
+  componentDidMount = () => {
+    this.database.on('value', (snap) => {
+      this.setState({
+        database: snap.val(),
+      });
+    });
+  }
 
   handleChange = selectedOption => {
     this.setState({ selectedOption });
