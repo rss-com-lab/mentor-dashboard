@@ -18,9 +18,9 @@ function getMentorList (dataObj) {
   return mentorsList;
 }
 
-function getTaskName(name, dataObj) {
-  const getUrl = Object.values(dataObj.tasksStatus[name]);
-  return getUrl[1];
+function getTaskURL(name, dataObj) {
+  const getUrl = dataObj.tasksStatus[name].taskLink;
+  return getUrl;
 }
 
 function getCheckTaskTime(name, dataObj) {
@@ -171,7 +171,7 @@ function setTask(mentor, dataObj) {
           className="link taskname"
           rel="noopener noreferrer"
           target="_blank"
-          href={getTaskName(name, dataObj)}
+          href={getTaskURL(name, dataObj)}
         >
           {name}
         </a>
