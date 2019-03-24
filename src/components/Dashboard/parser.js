@@ -43,10 +43,7 @@ function getTaskStatus(name, dataObj) {
 }
 
 function getStudenName(studentName, mentor, dataObj) {
-  const getStudentUrl = Object.values(
-    dataObj.mentors[mentor].mentorStudents[studentName]
-  );
-  const studentGithubUrl = Object.entries(getStudentUrl)[1][1];
+  const studentGithubUrl = dataObj.mentors[mentor].mentorStudents[studentName].studentGithub;
   return studentGithubUrl;
 }
 
