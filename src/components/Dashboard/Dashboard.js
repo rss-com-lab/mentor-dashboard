@@ -1,7 +1,7 @@
 import "./Dashboard.scss";
-import React from "react";
+import React, { Fragment } from "react";
 import Select from "react-select";
-import { mentorsList, getCurrentMentor, setStudent, setTask } from './parser';
+import { getMentorList, getCurrentMentor, setStudent, setTask } from './parser';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 import FireBase from '../../firebase/firebase';
@@ -34,14 +34,15 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { selectedOption } = this.state;
+    const { selectedOption, database } = this.state;
 
     return (
-      <div className="App">
+      <Fragment>
+        { database ? <div className="App">
         <Select
           value={selectedOption}
           onChange={this.handleChange}
-          options={mentorsList}
+          options={getMentorList(database)}
         />
 
         <table className="table mentor-table">
@@ -59,10 +60,10 @@ class Dashboard extends React.Component {
                 <td />
                 <td className="check_time cell ">check time</td>
                 <td className="statistics cell">statistics</td>
-                {setStudent(selectedOption)}
+                {setStudent(selectedOption, database)}
               </tr>
             </thead>
-            <tbody>{setTask(selectedOption)}</tbody>
+            <tbody>{setTask(selectedOption, database)}</tbody>
           </table>
         </div>
 
@@ -96,7 +97,8 @@ class Dashboard extends React.Component {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> : null}
+      </Fragment>
     );
   }
 }
