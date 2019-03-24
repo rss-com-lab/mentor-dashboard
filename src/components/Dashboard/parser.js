@@ -98,9 +98,10 @@ const getStudent = (mentor, dataObj) => {
 };
 
 function setClass(studentName, mentor, name, dataObj) {
-  const studentsStatus = Object.values(
-    dataObj.mentors[getCurrentMentor(mentor)].mentorStudents[studentName]
-  )[5];
+  const studentsStatus = dataObj
+    .mentors[getCurrentMentor(mentor)]
+    .mentorStudents[studentName].studentStatus;
+
   if (
     !getScore(studentName, getCurrentMentor(mentor), name, dataObj) &&
     getTaskStatus(name, dataObj) === "Checked" &&
