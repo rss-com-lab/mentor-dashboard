@@ -29,17 +29,17 @@ function getCheckTaskTime(name, dataObj) {
 }
 
 function getStatistics(name, dataObj) {
-  const commonCountTask = Object.entries(dataObj)[1][1];
-  const countCurrentTask = Object.values(dataObj.tasksStatus[name]);
-  const percent = (countCurrentTask[0] / commonCountTask) * 100;
+  const commonCountTask = dataObj.taskCount;
+  const countCurrentTask = dataObj.tasksStatus[name].taskCount;
+  const percent = (countCurrentTask / commonCountTask) * 100;
   if (percent > 0) {
     return Math.round(percent) + " %";
   }
 }
 
 function getTaskStatus(name, dataObj) {
-  const getStatus = Object.values(dataObj.tasksStatus[name]);
-  return getStatus[3].replace(/\s+/g, "");
+  const getStatus = dataObj.tasksStatus[name].taskStatus;
+  return getStatus.replace(/\s+/g, "");
 }
 
 function getStudenName(studentName, mentor, dataObj) {
