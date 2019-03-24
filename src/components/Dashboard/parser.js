@@ -24,7 +24,7 @@ function getTaskURL(name, dataObj) {
 }
 
 function getCheckTaskTime(name, dataObj) {
-  const CheckTaskTime = Object.values(dataObj.tasksStatus[name])[4];
+  const CheckTaskTime = dataObj.tasksStatus[name].checkTaskTime;
   return CheckTaskTime;
 }
 
