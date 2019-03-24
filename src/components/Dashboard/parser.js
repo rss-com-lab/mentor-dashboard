@@ -55,12 +55,8 @@ function getScore(studentName, mentor, currentTaskName, dataObj) {
 }
 
 function setTooltip(mentor, studentName, dataObj) {
-  const studentsStatus = Object.values(
-    dataObj.mentors[mentor].mentorStudents[studentName]
-  )[5];
-  const reasonDismiss = Object.values(
-    dataObj.mentors[mentor].mentorStudents[studentName]
-  )[6];
+  const studentsStatus = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
+  const reasonDismiss = dataObj.mentors[mentor].mentorStudents[studentName].reasonDismiss;
   if (studentsStatus === "dismissed") {
     return reasonDismiss;
   }
