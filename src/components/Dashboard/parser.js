@@ -20,13 +20,11 @@ function getMentorList (dataObj) {
 
 function getTaskName(name, dataObj) {
   const getUrl = Object.values(dataObj.tasksStatus[name]);
-  console.log(getUrl);
   return getUrl[1];
 }
 
 function getCheckTaskTime(name, dataObj) {
   const CheckTaskTime = Object.values(dataObj.tasksStatus[name])[4];
-  console.log(Object.values(getTaskName(name, dataObj)));
   return CheckTaskTime;
 }
 
@@ -53,24 +51,11 @@ function getStudenName(studentName, mentor, dataObj) {
 }
 
 function getScore(studentName, mentor, currentTaskName, dataObj) {
-  const getStudentUrl = Object.values(
-    dataObj.mentors[mentor].mentorStudents[studentName]
-  );
-  const score = Object.entries(getStudentUrl)[4][1][currentTaskName];
+  const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
   if (score) {
     return score;
   }
 }
-
-/* function getStudentStatus(mentor, studentName) {
-  const studentsStatus = Object.values(
-    data.mentors[mentor].mentorStudents[studentName]
-  )[5];
-  if (studentsStatus === "dismissed") {
-    return studentsStatus + " studentName cell";
-  }
-  return "studentName cell";
-} */
 
 function setTooltip(mentor, studentName, dataObj) {
   const studentsStatus = Object.values(
