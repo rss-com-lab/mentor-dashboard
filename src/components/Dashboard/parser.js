@@ -88,11 +88,15 @@ const getStudent = (mentor, dataObj) => {
   let students = [];
   if (localStorage.getItem("currentMentor")) {
     currentMentor = localStorage.getItem("currentMentor");
-    students = Object.keys(dataObj.mentors[currentMentor].mentorStudents);
+    if (dataObj.mentors[currentMentor].mentorStudents) {
+      students = Object.keys(dataObj.mentors[currentMentor].mentorStudents);
+    }
   }
   if (mentor) {
     currentMentor = mentor.value;
-    students = Object.keys(dataObj.mentors[currentMentor].mentorStudents);
+    if (dataObj.mentors[currentMentor].mentorStudents) {
+      students = Object.keys(dataObj.mentors[currentMentor].mentorStudents);
+    }
   }
   return students;
 };
