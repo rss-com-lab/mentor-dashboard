@@ -63,11 +63,8 @@ function setTooltip(mentor, studentName, dataObj) {
 }
 
 function getPrTask(studentName, mentor, currentTaskName, dataObj) {
-  const getStudentUrl = Object.values(
-    dataObj.mentors[mentor].mentorStudents[studentName]
-  );
-  const pr = Object.entries(getStudentUrl)[1][1][currentTaskName];
-  const score = Object.entries(getStudentUrl)[4][1][currentTaskName];
+  const pr = dataObj.mentors[mentor].mentorStudents[studentName].prLinks[currentTaskName];
+  const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
   if (getTaskStatus(currentTaskName, dataObj) === "Checking" && (score <= 0 || !score)) {
     return "#";
   }
