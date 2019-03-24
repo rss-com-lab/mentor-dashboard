@@ -28,7 +28,7 @@
   },
   "author": "petriken",
   "license": "MIT",
-  "homepage": "https://petriken.github.io/rss-mentor-dashboard",
+  "homepage": ".",
   "eslintConfig": {
     "extends": "react-app"
   },
