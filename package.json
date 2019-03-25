@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "firebase": "^5.9.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-redux": "^6.0.0",
@@ -27,7 +28,7 @@
   },
   "author": "petriken",
   "license": "MIT",
-  "homepage": "https://petriken.github.io/rss-mentor-dashboard",
+  "homepage": ".",
   "eslintConfig": {
     "extends": "react-app"
   },
