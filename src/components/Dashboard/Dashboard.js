@@ -1,9 +1,12 @@
-import "./Dashboard.scss";
-import React, { Fragment } from "react";
-import Select from "react-select";
-import { getMentorList, getCurrentMentor, setStudent, setTask } from './parser';
+import React, { Fragment } from 'react';
+import Select from 'react-select';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
+import {
+  getMentorList, getCurrentMentor, setStudent, setTask,
+} from './parser';
+import './Dashboard.scss';
+
 import FireBase from '../../firebase/firebase';
 
 FireBase.init();
@@ -28,9 +31,9 @@ class Dashboard extends React.Component {
     });
   }
 
-  handleChange = selectedOption => {
+  handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    localStorage.setItem("currentMentor", selectedOption.value);
+    localStorage.setItem('currentMentor', selectedOption.value);
   };
 
   render() {
@@ -91,7 +94,7 @@ class Dashboard extends React.Component {
             </tr>
             <tr>
               <td className="dismissed description-table__cell">
-                semitransparent student -{" "}
+                semitransparent student -{' '}
               </td>
               <td className="description-table__cell"> student dismissed</td>
             </tr>
