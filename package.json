@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "lint:write": "./node_modules/.bin/eslint --debug --fix",
+    "lint:fix": "./node_modules/.bin/eslint --debug --fix",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "process": "node ./src/indexScript.js",
@@ -34,7 +34,7 @@
   },
   "lint-staged": {
     "src/**/*.(js|jsx)": [
-      "npm run lint:write",
+      "npm run lint:fix",
       "git add"
     ]
   },
