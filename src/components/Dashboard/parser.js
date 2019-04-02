@@ -48,11 +48,37 @@ function getStudenName(studentName, mentor, dataObj) {
 }
 
 function getScore(studentName, mentor, currentTaskName, dataObj) {
+  const studentsStatus = dataObj
   const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
   if (score) {
-    return score;
+    return '✅ ' + score;
+  } else
+  if (score && getTaskStatus(currentTaskName, dataObj) === "Checking") {
+    return '🕓 ' + score;
+  } else
+  if (!score && getTaskStatus(currentTaskName, dataObj) === "Checking") {
+    return '🕓 ';
   }
+  else
+  if (!score && getTaskStatus(currentTaskName, dataObj) === "InProgress") {
+    return '🔨 ';
+  } else
+  if (score && getTaskStatus(currentTaskName, dataObj) === "InProgress") {
+    return '🔨 ' + score;
+  } else
+  if (score && getTaskStatus(currentTaskName, dataObj) === "ToDo") {
+    return '🔜 ' + score;
+  } else
+  if (!score && getTaskStatus(currentTaskName, dataObj) === "ToDo") {
+    return '🔜 ';
+  }
+  else
+  if (getTaskStatus(currentTaskName, dataObj) === "Checked" &&  studentsStatus !== "dismissed") {
+    return '⛔ ';
+  }
+  
 }
+
 
 function setTooltip(mentor, studentName, dataObj) {
   const studentsStatus = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
@@ -107,13 +133,13 @@ function setClass(studentName, mentor, name, dataObj) {
     .mentorStudents[studentName].studentStatus;
 
   if (
-    !getScore(studentName, getCurrentMentor(mentor), name, dataObj) &&
+    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ ' &&
     getTaskStatus(name, dataObj) === "Checked" &&
     studentsStatus !== "dismissed"
   ) {
     return "failed";
   } else if (
-    !getScore(studentName, getCurrentMentor(mentor), name, dataObj) &&
+    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ ' &&
     getTaskStatus(name, dataObj) === "Checked" &&
     studentsStatus === "dismissed"
   ) {
