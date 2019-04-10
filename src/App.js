@@ -6,6 +6,7 @@ import Select from "react-select";
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 import FireBase from './firebase';
+import  MentorForm from './components/MentorForm'
 
 FireBase.init();
 
@@ -165,6 +166,11 @@ function setTask(mentor, dataObj) {
   ));
 }
 
+function getMentorForm() {
+  const form = MentorForm();
+  return form;
+}
+
 class App extends React.Component {
   constructor() {
     super();
@@ -191,6 +197,11 @@ class App extends React.Component {
   }
 
   render() {
+
+    if (window.location.pathname.includes('mentor-form')) {
+      return getMentorForm();
+    }
+
     const { selectedOption, database } = this.state;
     return (
       <Fragment>
