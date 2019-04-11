@@ -28,20 +28,22 @@ class FireBase {
         throw new Error(error);
       });
 
-    const userData = await fetch(`https://api.github.com/user?access_token=${token}`)
-      .then(response => response.json())
-      .catch((error) => {
+    if (token) {
+      const userData = await fetch(`https://api.github.com/user?access_token=${token}`)
+        .then(response => response.json())
+        .catch((error) => {
+          throw new Error(error);
+        });
+
+      const user = firebase.auth().currentUser;
+
+      user.updateProfile({
+        displayName: userData.login,
+        photoURL: userData.avatar_url,
+      }).catch((error) => {
         throw new Error(error);
       });
-
-    const user = firebase.auth().currentUser;
-
-    user.updateProfile({
-      displayName: userData.login,
-      photoURL: userData.avatar_url,
-    }).catch((error) => {
-      throw new Error(error);
-    });
+    }
   }
 
   static logout() {
