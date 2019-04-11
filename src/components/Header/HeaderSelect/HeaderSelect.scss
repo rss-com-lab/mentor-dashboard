@@ -1,0 +1,22 @@
+.react-select-container {
+  border-radius: 5px;
+
+  .react-select__control {
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    box-shadow: none;
+  }
+
+  .react-select__control:hover {
+    background-color: rgba(0, 0, 0, 0.07);
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    cursor: pointer;
+  }
+
+  .react-select__control.react-select__control--is-focused {
+    border: 1px solid rgba(0, 0, 0, 0.23);
+  }
+}
+
+.react-select__single-value, .react-select__placeholder {
+  font-size: 14px;
+}
