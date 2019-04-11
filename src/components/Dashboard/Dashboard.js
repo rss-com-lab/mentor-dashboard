@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
         database: snap.val(),
       });
     });
-  }
+  };
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
             </tr>
             <tr>
               <td className="failed description-table__cell" />
-              <td className="description-table__cell"><span role="img" aria-label="fail">⛔ </span>No solution</td> 
+              <td className="description-table__cell"><span role="img" aria-label="fail">⛔ </span>No solution</td>
             </tr>
             <tr>
               <td className="dismissed description-table__cell">
