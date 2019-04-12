@@ -37,11 +37,11 @@ class HeaderSelect extends Component {
     const { mentorsList } = this.state;
 
     firebase.auth().onAuthStateChanged((user) => {
-      const mentorFromStorage = localStorage.getItem('selectedMentor');
+      const mentorFromStorage = localStorage.getItem('currentMentor');
 
       if (user && isMentor(user.displayName, mentorsList)) {
         this.handleChange({ value: user.displayName, label: user.displayName });
-        localStorage.removeItem('selectedMentor');
+        localStorage.removeItem('currentMentor');
       } else if (mentorFromStorage) {
         this.setState({
           selectedOption: { value: mentorFromStorage, label: mentorFromStorage },
