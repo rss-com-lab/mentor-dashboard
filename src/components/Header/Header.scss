@@ -1,6 +1,8 @@
 .navbar-container {
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 
   .navbar {
     width: 90%;
