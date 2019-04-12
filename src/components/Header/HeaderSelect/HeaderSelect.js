@@ -50,9 +50,16 @@ class HeaderSelect extends Component {
     });
   };
 
+  handleChange = (selectedOption) => {
+    const { handleInput } = this.props;
+    this.setState({ selectedOption });
+    handleInput(selectedOption.label);
+    localStorage.setItem('currentMentor', selectedOption.value);
+  };
+
   render() {
     const {
-      placeholder, database, getMentorList, handleChange,
+      placeholder, database, getMentorList,
     } = this.props;
     const { selectedOption } = this.state;
 
@@ -63,7 +70,7 @@ class HeaderSelect extends Component {
           classNamePrefix="react-select"
           placeholder={placeholder}
           value={selectedOption}
-          onChange={handleChange}
+          onChange={this.handleChange}
           options={getMentorList(database)}
           styles={customStyles}
         />
@@ -74,7 +81,6 @@ class HeaderSelect extends Component {
 
 HeaderSelect.propTypes = {
   placeholder: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
   database: PropTypes.instanceOf(Object).isRequired,
 };
 
