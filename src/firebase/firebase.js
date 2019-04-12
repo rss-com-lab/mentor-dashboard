@@ -52,6 +52,7 @@ class FireBase {
     }).catch((error) => {
       throw new Error(error);
     });
+    localStorage.removeItem('currentMentor');
   }
 }
 
