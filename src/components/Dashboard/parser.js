@@ -14,13 +14,11 @@ function getMentorList(dataObj) {
 }
 
 function getTaskURL(name, dataObj) {
-  const getUrl = dataObj.tasksStatus[name].taskLink;
-  return getUrl;
+  return dataObj.tasksStatus[name].taskLink;
 }
 
 function getCheckTaskTime(name, dataObj) {
-  const CheckTaskTime = dataObj.tasksStatus[name].checkTaskTime;
-  return CheckTaskTime;
+  return dataObj.tasksStatus[name].checkTaskTime;
 }
 
 function getStatistics(name, dataObj) {
@@ -37,40 +35,34 @@ function getTaskStatus(name, dataObj) {
 }
 
 function getStudenName(studentName, mentor, dataObj) {
-  const studentGithubUrl = dataObj.mentors[mentor].mentorStudents[studentName].studentGithub;
-  return studentGithubUrl;
+  return dataObj.mentors[mentor].mentorStudents[studentName].studentGithub;
 }
 
 function getScore(studentName, mentor, currentTaskName, dataObj) {
-  const studentsStatus = dataObj
+  const studentsStatus = dataObj;
   const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
-  
+
   if (score) {
-    return '✅ ' + score;
-  } else
-  if (score && getTaskStatus(currentTaskName, dataObj) === "Checking") {
-    return '🕓 ' + score;
-  } else
-  if (!score && getTaskStatus(currentTaskName, dataObj) === "Checking") {
+    return `✅ ${score}`;
+  } if (score && getTaskStatus(currentTaskName, dataObj) === 'Checking') {
+    return `🕓 ${score}`;
+  } if (!score && getTaskStatus(currentTaskName, dataObj) === 'Checking') {
     return '🕓 ';
   }
-  else
-  if (!score && getTaskStatus(currentTaskName, dataObj) === "InProgress") {
+  if (!score && getTaskStatus(currentTaskName, dataObj) === 'InProgress') {
     return '🔨 ';
-  } else
-  if (score && getTaskStatus(currentTaskName, dataObj) === "InProgress") {
-    return '🔨 ' + score;
-  } else
-  if (score && getTaskStatus(currentTaskName, dataObj) === "ToDo") {
-    return '🔜 ' + score;
-  } else
-  if (!score && getTaskStatus(currentTaskName, dataObj) === "ToDo") {
+  } if (score && getTaskStatus(currentTaskName, dataObj) === 'InProgress') {
+    return `🔨 ${score}`;
+  } if (score && getTaskStatus(currentTaskName, dataObj) === 'ToDo') {
+    return `🔜 ${score}`;
+  } if (!score && getTaskStatus(currentTaskName, dataObj) === 'ToDo') {
     return '🔜 ';
   }
-  else
-  if (getTaskStatus(currentTaskName, dataObj) === "Checked" &&  studentsStatus !== "dismissed") {
+  if (getTaskStatus(currentTaskName, dataObj) === 'Checked' && studentsStatus !== 'dismissed') {
     return '⛔ ';
   }
+
+  return null;
 }
 
 
@@ -128,25 +120,24 @@ function setClass(studentName, mentor, name, dataObj) {
     .mentorStudents[studentName].studentStatus;
 
   if (
-    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ ' &&
-    getTaskStatus(name, dataObj) === "Checked" &&
-    studentsStatus !== "dismissed"
+    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ '
+    && getTaskStatus(name, dataObj) === 'Checked'
+    && studentsStatus !== 'dismissed'
   ) {
-    return "failed";
-  } else if (
-    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ ' &&
-    getTaskStatus(name, dataObj) === "Checked" &&
-    studentsStatus === "dismissed"
+    return 'failed';
+  } if (
+    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ '
+    && getTaskStatus(name, dataObj) === 'Checked'
+    && studentsStatus === 'dismissed'
   ) {
-    return "failed dismissed";
-  } else if (
-    getTaskStatus(name, dataObj) &&
-    studentsStatus === "dismissed"
+    return 'failed dismissed';
+  } if (
+    getTaskStatus(name, dataObj)
+    && studentsStatus === 'dismissed'
   ) {
-    return getTaskStatus(name, dataObj) + " dismissed";
-  } else {
-    return getTaskStatus(name, dataObj);
+    return `${getTaskStatus(name, dataObj)} dismissed`;
   }
+  return getTaskStatus(name, dataObj);
 }
 
 function setStudent(mentor, dataObj) {
