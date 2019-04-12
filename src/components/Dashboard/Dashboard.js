@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import Select from 'react-select';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 import {
@@ -61,12 +60,6 @@ class Dashboard extends React.Component {
             database={database}
           />
           { database ? <Fragment>
-            <Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={getMentorList(database)}
-            />
-
             <table className="table mentor-table">
               <thead className="thead">
                 <tr>
