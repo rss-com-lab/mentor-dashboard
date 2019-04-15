@@ -26,18 +26,14 @@ class FireBase {
       .auth()
       .signInWithPopup(new firebase.auth.GithubAuthProvider())
       .then(result => result.credential.accessToken)
-      .catch((error) => {
-        throw new Error(error);
-      });
+      .catch(error => console.error('login error', error));
 
     if (token) {
       const userData = await fetch(
         `https://api.github.com/user?access_token=${token}`,
       )
         .then(response => response.json())
-        .catch((error) => {
-          throw new Error(error);
-        });
+        .catch(error => console.error('request to github api error', error));
 
       const user = firebase.auth().currentUser;
 
@@ -46,9 +42,7 @@ class FireBase {
           displayName: userData.login,
           photoURL: userData.avatar_url,
         })
-        .catch((error) => {
-          throw new Error(error);
-        });
+        .catch(error => console.error('update user profile error', error));
     }
   }
 
@@ -59,9 +53,7 @@ class FireBase {
       .then(() => {
         window.location.reload();
       })
-      .catch((error) => {
-        throw new Error(error);
-      });
+      .catch(error => console.error('logout error', error));
     localStorage.removeItem('currentMentor');
   }
 }
