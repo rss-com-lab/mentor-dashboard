@@ -22,14 +22,18 @@ class FireBase {
   }
 
   static async auth() {
-    const token = await firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())
+    const token = await firebase
+      .auth()
+      .signInWithPopup(new firebase.auth.GithubAuthProvider())
       .then(result => result.credential.accessToken)
       .catch((error) => {
         throw new Error(error);
       });
 
     if (token) {
-      const userData = await fetch(`https://api.github.com/user?access_token=${token}`)
+      const userData = await fetch(
+        `https://api.github.com/user?access_token=${token}`,
+      )
         .then(response => response.json())
         .catch((error) => {
           throw new Error(error);
@@ -37,21 +41,27 @@ class FireBase {
 
       const user = firebase.auth().currentUser;
 
-      user.updateProfile({
-        displayName: userData.login,
-        photoURL: userData.avatar_url,
-      }).catch((error) => {
-        throw new Error(error);
-      });
+      user
+        .updateProfile({
+          displayName: userData.login,
+          photoURL: userData.avatar_url,
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
     }
   }
 
   static logout() {
-    firebase.auth().signOut().then(() => {
-      window.location.reload();
-    }).catch((error) => {
-      throw new Error(error);
-    });
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
     localStorage.removeItem('currentMentor');
   }
 }

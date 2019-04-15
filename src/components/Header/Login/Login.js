@@ -21,7 +21,8 @@ class LoginButton extends Component {
         variant="outlined"
         className="login-button"
         onClick={this.handleClick}
-      >Login
+      >
+        Login
       </Button>
     );
   }

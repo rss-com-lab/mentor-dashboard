@@ -31,7 +31,7 @@ const App = () => (
       {/* <Link to="/">Dashboard</Link>{' '} */}
       {/* <Link to={{pathname: '/form'}}>Form</Link>{' '} */}
       <Switch>
-        <Route exact path ="/" component={Dashboard} />
+        <Route exact path="/" component={Dashboard} />
         <Route path="/form" component={Form} />
         <Route render={() => <h1>Page not found</h1>} />
       </Switch>

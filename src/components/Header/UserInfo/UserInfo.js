@@ -79,7 +79,10 @@ class UserInfo extends Component {
             <Grow
               {...TransitionProps}
               id="menu-list-grow"
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              style={{
+                transformOrigin:
+                  placement === 'bottom' ? 'center top' : 'center bottom',
+              }}
             >
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>

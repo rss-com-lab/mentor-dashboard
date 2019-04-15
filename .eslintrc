@@ -5,6 +5,8 @@
   },
   "plugins": ["prettier"],
   "rules": {
+    "max-len": [2, {"code": 100, "tabWidth": 4, "ignoreUrls": true}],
+    "operator-linebreak": ["error", "before"],
     "react/jsx-filename-extension": [
       1,
       {

@@ -58,9 +58,7 @@ class HeaderSelect extends Component {
   };
 
   render() {
-    const {
-      placeholder, database, getMentorList,
-    } = this.props;
+    const { placeholder, database, getMentorList } = this.props;
     const { selectedOption } = this.state;
 
     return (

@@ -10,7 +10,11 @@ import UserInfo from './UserInfo/UserInfo';
 class Header extends Component {
   render() {
     const {
-      handleInput, selectedOption, getMentorList, mentorDataObj, database,
+      handleInput,
+      selectedOption,
+      getMentorList,
+      mentorDataObj,
+      database,
     } = this.props;
     return (
       <div className="navbar-container">
@@ -25,12 +29,14 @@ class Header extends Component {
               mentorDataObj={mentorDataObj}
               database={database}
             />
-          ) : <CircularProgress disableShrink />}
+          ) : (
+            <CircularProgress disableShrink />
+          )}
           {mentorDataObj ? (
-            <UserInfo
-              mentorDataObj={mentorDataObj}
-            />
-          ) : <LoginButton />}
+            <UserInfo mentorDataObj={mentorDataObj} />
+          ) : (
+            <LoginButton />
+          )}
         </nav>
       </div>
     );
