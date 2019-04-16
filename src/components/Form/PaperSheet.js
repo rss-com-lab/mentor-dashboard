@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles/index';
+import Paper from '@material-ui/core/Paper/index';
+// import Typography from '@material-ui/core/Typography/index';
 
 const styles = theme => ({
   root: {
@@ -13,12 +13,12 @@ const styles = theme => ({
 });
 
 function PaperSheet(props) {
-  const { classes } = props;
+  const { classes, children } = props;
 
   return (
     <div>
       <Paper className={classes.root} elevation={1}>
-        {props.children}
+        {children}
       </Paper>
     </div>
   );

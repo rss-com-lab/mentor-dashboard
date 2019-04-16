@@ -65,3 +65,9 @@ typings/
 
 # build folder
 /build
+
+# firebase cache
+/.firebase
+
+# webstorm config files
+.idea

@@ -1,21 +1,23 @@
+/* eslint-disable */
+
 import { Tab, Tabs } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
+import AppBar from '@material-ui/core/AppBar/index';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography/index';
+import TextField from '@material-ui/core/TextField/index';
 
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Grid from '@material-ui/core/Grid/index';
+// import FormControlLabel from '@material-ui/core/FormControlLabel/index';
+// import Checkbox from '@material-ui/core/Checkbox/index';
+// import Paper from '@material-ui/core/Paper/index';
 
-import { Formik } from 'formik';
+import { Formik } from 'formik/dist/index';
 import * as Yup from 'yup';
 
-import PaperSheet from './PaperSheet'
+import PaperSheet from './PaperSheet';
 
 
 import FromAppBar from './AppBar';
@@ -50,15 +52,13 @@ const initFormValues = {
   prGithub: '',
   mark: 0,
   comment: '',
-  task: ''
+  task: '',
 };
 
 
-const FormSubmit = ({children}) => {
-  // center the paper sheets
-  // add menu with links to timetable
-
-  return   <div>
+// center the paper sheets
+// add menu with links to timetable
+const FormSubmit = ({ children }) => <div>
     <h1>Anywhere in your app!</h1>
     <Formik
       initialValues={initFormValues}
@@ -73,8 +73,8 @@ const FormSubmit = ({children}) => {
       onSubmit={(values, { setSubmitting }) => {
         console.log('test ', values);
 
-        var g = document.createElement('div');
-        g.setAttribute("id", "test");
+        const g = document.createElement('div');
+        g.setAttribute('id', 'test');
 
         document.body.appendChild(g);
         document.getElementById('test').innerHTML = `
@@ -93,34 +93,31 @@ const FormSubmit = ({children}) => {
 <iframe name="hidden_iframe" id="hidden_iframe" style="display: none;"></iframe>
         
         
-        `
-
+        `;
 
 
         window.submitForm = () => {
           document.getElementById('custom_form').submit.click();
         };
 
-        window.submitForm()
+        window.submitForm();
 
         setTimeout(() => {
-
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }, 400);
       }}
     >
       {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => {
-
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        /* and other goodies */
+      }) => {
         const tasks = [
           {
             value: 'Code Jam "CoreJS"',
@@ -148,7 +145,7 @@ const FormSubmit = ({children}) => {
           },
         ];
 
-        const evaluation =  <React.Fragment>
+        const evaluation = <React.Fragment>
           <TextField
             id="task"
             select
@@ -157,13 +154,13 @@ const FormSubmit = ({children}) => {
             // value={this.state.currency}
             // onChange={this.handleChange('currency')}
             SelectProps={{
-              native: true
+              native: true,
             }}
             helperText="Выберете название таска"
             margin="normal"
             onChange={(...args) => {
               console.log('change select', args);
-              handleChange(...args)
+              handleChange(...args);
             }}
             onBlur={handleBlur}
             value={values.task}
@@ -188,7 +185,7 @@ const FormSubmit = ({children}) => {
             onBlur={handleBlur}
             id="comment" value={values.comment} label="Комментарий" fullWidth />
 
-        </React.Fragment>
+        </React.Fragment>;
 
         const currencies = [
           {
@@ -210,8 +207,7 @@ const FormSubmit = ({children}) => {
         ];
 
 
-
-        const expel =  <React.Fragment>
+        const expel = <React.Fragment>
           Отчислить
 
           <TextField
@@ -222,7 +218,7 @@ const FormSubmit = ({children}) => {
             // value={this.state.currency}
             // onChange={this.handleChange('currency')}
             SelectProps={{
-              native: true
+              native: true,
             }}
             helperText="Выберете причину отчисления"
             margin="normal"
@@ -233,54 +229,51 @@ const FormSubmit = ({children}) => {
               </option>
             ))}
           </TextField>
-        </React.Fragment>
+        </React.Fragment>;
 
         return <form onSubmit={handleSubmit}>
-          {/*<input*/}
-          {/*  type="url"*/}
-          {/*  name="mentorGithub"*/}
-          {/*  onChange={handleChange}*/}
-          {/*  onBlur={handleBlur}*/}
-          {/*  value={values.mentorGithub}*/}
-          {/*/>*/}
+          {/* <input */}
+          {/*  type="url" */}
+          {/*  name="mentorGithub" */}
+          {/*  onChange={handleChange} */}
+          {/*  onBlur={handleBlur} */}
+          {/*  value={values.mentorGithub} */}
+          {/* /> */}
           {errors.mentorGithub && touched.mentorGithub && errors.mentorGithub}
           {errors.studentGithub && touched.studentGithub && errors.studentGithub}
           {errors.prGithub && touched.prGithub && errors.prGithub}
           {errors.mark && touched.mark && errors.mark}
           {errors.task && touched.task && errors.task}
-          <TextField required id="mentorGithub" label="Ссылка на GitHub ментора в формате: https://github.com/nickname" fullWidth  onChange={handleChange}
+          <TextField required id="mentorGithub" label="Ссылка на GitHub ментора в формате: https://github.com/nickname" fullWidth onChange={handleChange}
                      onBlur={handleBlur}
                      value={values.mentorGithub}/>
-          <TextField required id="studentGithub" style={{paddingBottom: 20}} label="Ссылка на GitHub студента в формате: https://github.com/nickname" fullWidth  onChange={handleChange}
+          <TextField required id="studentGithub" style={{ paddingBottom: 20 }} label="Ссылка на GitHub студента в формате: https://github.com/nickname" fullWidth onChange={handleChange}
                      onBlur={handleBlur}
                      value={values.studentGithub}/>
-          {/*{JSON.stringify(children, 0, 2)}*/}
-          <SimpleTabs classes={{root: 'tab-root'}}
+          {/* {JSON.stringify(children, 0, 2)} */}
+          <SimpleTabs classes={{ root: 'tab-root' }}
                       item1={evaluation}
                       item2={expel}
-                      item3={"оставить фидбек"}
+                      item3="оставить фидбек"
           />
 
 
-
-          {/*<input*/}
-          {/*  type="url"*/}
-          {/*  name="studentGithub"*/}
-          {/*  onChange={handleChange}*/}
-          {/*  onBlur={handleBlur}*/}
-          {/*  value={values.studentGithub}*/}
-          {/*/>*/}
-
+          {/* <input */}
+          {/*  type="url" */}
+          {/*  name="studentGithub" */}
+          {/*  onChange={handleChange} */}
+          {/*  onBlur={handleBlur} */}
+          {/*  value={values.studentGithub} */}
+          {/* /> */}
 
 
           <button type="submit" disabled={isSubmitting}>
             Submit
           </button>
-        </form>
+        </form>;
       }}
     </Formik>
   </div>;
-}
 
 
 class SimpleTabs extends React.Component {
@@ -293,11 +286,13 @@ class SimpleTabs extends React.Component {
   };
 
   render() {
-    const { classes, item1, item2, item3 } = this.props;
+    const {
+      classes, item1, item2, item3,
+    } = this.props;
     const { value } = this.state;
 
     return (
-      <div className={classes.root} style={{height: 400}}>
+      <div className={classes.root} style={{ height: 400 }}>
         <AppBar position="static">
           <Tabs style={{}} value={value} onChange={this.handleChange}>
             <Tab label="Оставить оценку" />
@@ -323,10 +318,7 @@ SimpleTabs.propTypes = {
 // export default withStyles(styles)(SimpleTabs);
 
 
-
 function MentorForm() {
-
-
   //
   return (
     <React.Fragment>
