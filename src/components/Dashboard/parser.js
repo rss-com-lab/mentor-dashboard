@@ -14,13 +14,11 @@ function getMentorList(dataObj) {
 }
 
 function getTaskURL(name, dataObj) {
-  const getUrl = dataObj.tasksStatus[name].taskLink;
-  return getUrl;
+  return dataObj.tasksStatus[name].taskLink;
 }
 
 function getCheckTaskTime(name, dataObj) {
-  const CheckTaskTime = dataObj.tasksStatus[name].checkTaskTime;
-  return CheckTaskTime;
+  return dataObj.tasksStatus[name].checkTaskTime;
 }
 
 function getStatistics(name, dataObj) {
@@ -28,7 +26,7 @@ function getStatistics(name, dataObj) {
   const countCurrentTask = dataObj.tasksStatus[name].taskCount;
   const percent = (countCurrentTask / commonCountTask) * 100;
 
-  return (percent > 0) ? `${Math.round(percent)} %` : null;
+  return percent > 0 ? `${Math.round(percent)} %` : null;
 }
 
 function getTaskStatus(name, dataObj) {
@@ -37,54 +35,60 @@ function getTaskStatus(name, dataObj) {
 }
 
 function getStudenName(studentName, mentor, dataObj) {
-  const studentGithubUrl = dataObj.mentors[mentor].mentorStudents[studentName].studentGithub;
-  return studentGithubUrl;
+  return dataObj.mentors[mentor].mentorStudents[studentName].studentGithub;
 }
 
 function getScore(studentName, mentor, currentTaskName, dataObj) {
-  const studentsStatus = dataObj
+  const studentsStatus = dataObj;
   const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
-  
+
   if (score) {
-    return '✅ ' + score;
-  } else
-  if (score && getTaskStatus(currentTaskName, dataObj) === "Checking") {
-    return '🕓 ' + score;
-  } else
-  if (!score && getTaskStatus(currentTaskName, dataObj) === "Checking") {
+    return `✅ ${score}`;
+  }
+  if (score && getTaskStatus(currentTaskName, dataObj) === 'Checking') {
+    return `🕓 ${score}`;
+  }
+  if (!score && getTaskStatus(currentTaskName, dataObj) === 'Checking') {
     return '🕓 ';
   }
-  else
-  if (!score && getTaskStatus(currentTaskName, dataObj) === "InProgress") {
+  if (!score && getTaskStatus(currentTaskName, dataObj) === 'InProgress') {
     return '🔨 ';
-  } else
-  if (score && getTaskStatus(currentTaskName, dataObj) === "InProgress") {
-    return '🔨 ' + score;
-  } else
-  if (score && getTaskStatus(currentTaskName, dataObj) === "ToDo") {
-    return '🔜 ' + score;
-  } else
-  if (!score && getTaskStatus(currentTaskName, dataObj) === "ToDo") {
+  }
+  if (score && getTaskStatus(currentTaskName, dataObj) === 'InProgress') {
+    return `🔨 ${score}`;
+  }
+  if (score && getTaskStatus(currentTaskName, dataObj) === 'ToDo') {
+    return `🔜 ${score}`;
+  }
+  if (!score && getTaskStatus(currentTaskName, dataObj) === 'ToDo') {
     return '🔜 ';
   }
-  else
-  if (getTaskStatus(currentTaskName, dataObj) === "Checked" &&  studentsStatus !== "dismissed") {
+  if (
+    getTaskStatus(currentTaskName, dataObj) === 'Checked'
+    && studentsStatus !== 'dismissed'
+  ) {
     return '⛔ ';
   }
-}
 
+  return null;
+}
 
 function setTooltip(mentor, studentName, dataObj) {
   const studentsStatus = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
   const { reasonDismiss } = dataObj.mentors[mentor].mentorStudents[studentName];
-  return (studentsStatus === 'dismissed') ? reasonDismiss : null;
+  return studentsStatus === 'dismissed' ? reasonDismiss : null;
 }
 
 function getPrTask(studentName, mentor, currentTaskName, dataObj) {
-  const pr = dataObj.mentors[mentor].mentorStudents[studentName].prLinks[currentTaskName];
+  const pr = dataObj.mentors[mentor].mentorStudents[studentName].prLinks[
+    currentTaskName
+  ];
   const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
 
-  if (getTaskStatus(currentTaskName, dataObj) === 'Checking' && (score <= 0 || !score)) {
+  if (
+    getTaskStatus(currentTaskName, dataObj) === 'Checking'
+    && (score <= 0 || !score)
+  ) {
     return '#';
   }
 
@@ -123,30 +127,27 @@ const getStudent = (mentor, dataObj) => {
 };
 
 function setClass(studentName, mentor, name, dataObj) {
-  const studentsStatus = dataObj
-    .mentors[getCurrentMentor(mentor)]
-    .mentorStudents[studentName].studentStatus;
+  const studentsStatus = dataObj.mentors[getCurrentMentor(mentor)].mentorStudents[studentName]
+    .studentStatus;
 
   if (
-    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ ' &&
-    getTaskStatus(name, dataObj) === "Checked" &&
-    studentsStatus !== "dismissed"
+    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ '
+    && getTaskStatus(name, dataObj) === 'Checked'
+    && studentsStatus !== 'dismissed'
   ) {
-    return "failed";
-  } else if (
-    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ ' &&
-    getTaskStatus(name, dataObj) === "Checked" &&
-    studentsStatus === "dismissed"
-  ) {
-    return "failed dismissed";
-  } else if (
-    getTaskStatus(name, dataObj) &&
-    studentsStatus === "dismissed"
-  ) {
-    return getTaskStatus(name, dataObj) + " dismissed";
-  } else {
-    return getTaskStatus(name, dataObj);
+    return 'failed';
   }
+  if (
+    getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ '
+    && getTaskStatus(name, dataObj) === 'Checked'
+    && studentsStatus === 'dismissed'
+  ) {
+    return 'failed dismissed';
+  }
+  if (getTaskStatus(name, dataObj) && studentsStatus === 'dismissed') {
+    return `${getTaskStatus(name, dataObj)} dismissed`;
+  }
+  return getTaskStatus(name, dataObj);
 }
 
 function setStudent(mentor, dataObj) {
@@ -201,10 +202,16 @@ function setTask(mentor, dataObj) {
           {name}
         </a>
       </td>
-      <td className={getTaskStatus(name, dataObj)} style={{ textAlign: 'center' }}>
-      {getCheckTaskTime(name, dataObj)}
+      <td
+        className={getTaskStatus(name, dataObj)}
+        style={{ textAlign: 'center' }}
+      >
+        {getCheckTaskTime(name, dataObj)}
       </td>
-      <td className={getTaskStatus(name, dataObj)} style={{ textAlign: 'center' }}>
+      <td
+        className={getTaskStatus(name, dataObj)}
+        style={{ textAlign: 'center' }}
+      >
         {getStatistics(name, dataObj)}
       </td>
       {setScore(mentor, name, dataObj)}

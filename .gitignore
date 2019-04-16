@@ -65,3 +65,6 @@ typings/
 
 # firebase cache
 /.firebase
+
+# webstorm config files
+.idea
