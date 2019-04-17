@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField/index';
 // import Paper from '@material-ui/core/Paper/index';
 
 import { Formik } from 'formik/dist/index';
+import { getSelectOptions, tasks } from './utils';
 import * as Yup from 'yup';
 
 import PaperSheet from './PaperSheet';
@@ -59,7 +60,7 @@ const initFormValues = {
 // center the paper sheets
 // add menu with links to timetable
 const FormSubmit = ({ children }) => <div>
-    <h1>Anywhere in your app!</h1>
+    <h1>Student evaluation</h1>
     <Formik
       initialValues={initFormValues}
       validationSchema={Yup.object().shape({
@@ -118,32 +119,7 @@ const FormSubmit = ({ children }) => <div>
         isSubmitting,
         /* and other goodies */
       }) => {
-        const tasks = [
-          {
-            value: 'Code Jam "CoreJS"',
-            label: 'Code Jam "CoreJS"',
-          },
-          {
-            value: 'Code Jam "DOM, DOM Events"',
-            label: 'Code Jam "DOM, DOM Events"',
-          },
-          {
-            value: 'Markup Neutron Mail',
-            label: 'Markup Neutron Mail',
-          },
-          {
-            value: 'Course work (Editor)',
-            label: 'Course work (Editor)',
-          },
-          {
-            value: 'Code Jam "Scoreboard"',
-            label: 'Code Jam "Scoreboard"',
-          },
-          {
-            value: 'Youtube',
-            label: 'Youtube',
-          },
-        ];
+        const tasksSelectOptions = getSelectOptions(tasks);
 
         const evaluation = <React.Fragment>
           <TextField
@@ -166,7 +142,7 @@ const FormSubmit = ({ children }) => <div>
             value={values.task}
           >
             <option value="" label="Выберете название таска" />
-            {tasks.map(option => (
+            {tasksSelectOptions.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -232,13 +208,6 @@ const FormSubmit = ({ children }) => <div>
         </React.Fragment>;
 
         return <form onSubmit={handleSubmit}>
-          {/* <input */}
-          {/*  type="url" */}
-          {/*  name="mentorGithub" */}
-          {/*  onChange={handleChange} */}
-          {/*  onBlur={handleBlur} */}
-          {/*  value={values.mentorGithub} */}
-          {/* /> */}
           {errors.mentorGithub && touched.mentorGithub && errors.mentorGithub}
           {errors.studentGithub && touched.studentGithub && errors.studentGithub}
           {errors.prGithub && touched.prGithub && errors.prGithub}
@@ -295,9 +264,9 @@ class SimpleTabs extends React.Component {
       <div className={classes.root} style={{ height: 400 }}>
         <AppBar position="static">
           <Tabs style={{}} value={value} onChange={this.handleChange}>
-            <Tab label="Оставить оценку" />
-            <Tab label="Отчислить" />
-            <Tab label="Оставить фидбек" />
+            <Tab label="Выставить оценку" />
+            {/*<Tab label="Отчислить" />*/}
+            {/*<Tab label="Оставить фидбек" />*/}
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>{item1}</TabContainer>}
@@ -326,7 +295,7 @@ function MentorForm() {
 
       <PaperSheet>
         <Typography variant="h5" gutterBottom>
-          Score RSSchool 2018Q3
+          Score RSSchool 2019Q1
         </Typography>
 
         <FormSubmit>
