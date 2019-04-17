@@ -20,6 +20,7 @@ class LoginButton extends Component {
       <Button
         variant="contained"
         className="login-button"
+        color="secondary"
         onClick={this.handleClick}
       >
         Login

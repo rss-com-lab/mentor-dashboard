@@ -54,7 +54,7 @@ ButtonAppBar.propTypes = {
 };
 
 ButtonAppBar.defaultProps = {
-  mentorDataObj: {},
+  mentorDataObj: null,
 };
 
 export default withStyles(styles)(ButtonAppBar);
