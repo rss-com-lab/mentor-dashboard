@@ -9,6 +9,9 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography/index';
 import TextField from '@material-ui/core/TextField/index';
 
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import pink from '@material-ui/core/colors/pink';
+
 // import Grid from '@material-ui/core/Grid/index';
 // import FormControlLabel from '@material-ui/core/FormControlLabel/index';
 // import Checkbox from '@material-ui/core/Checkbox/index';
@@ -20,7 +23,7 @@ import * as Yup from 'yup';
 
 import PaperSheet from './PaperSheet';
 
-
+import Button from '@material-ui/core/Button';
 import FromAppBar from './AppBar';
 
 // need to make conditions for different actions
@@ -236,9 +239,9 @@ const FormSubmit = ({ children }) => <div>
           {/* /> */}
 
 
-          <button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting} variant="contained" color="primary">
             Submit
-          </button>
+          </Button>
         </form>;
       }}
     </Formik>
@@ -286,24 +289,39 @@ SimpleTabs.propTypes = {
 
 // export default withStyles(styles)(SimpleTabs);
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#fff176',
+    },
+    secondary: pink,
+  },
+});
 
 function MentorForm() {
   //
   return (
-    <React.Fragment>
-      <FromAppBar/>
+    <MuiThemeProvider
+      theme={
+        theme
+      }
+    >
+      <React.Fragment>
+        <FromAppBar/>
 
-      <PaperSheet>
-        <Typography variant="h5" gutterBottom>
-          Score RSSchool 2019Q1
-        </Typography>
+        <PaperSheet>
+          <Typography variant="h5" gutterBottom>
+            Score RSSchool 2019Q1
+          </Typography>
 
-        <FormSubmit>
+          <FormSubmit>
 
-        </FormSubmit>
-      </PaperSheet>
+          </FormSubmit>
+        </PaperSheet>
 
-    </React.Fragment>
+      </React.Fragment>
+    </MuiThemeProvider>
+
   );
 }
 
