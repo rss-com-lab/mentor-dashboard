@@ -6,7 +6,7 @@ import './Logo.scss';
 const Logo = ({ link, brandName }) => (
   <h1 className="navbar-logo">
     <a href={link}>
-      <img width="40" src={LogoImg} alt={brandName} />
+      <img width="40" style={{ marginTop: 8 }} src={LogoImg} alt={brandName} />
     </a>
   </h1>
 );

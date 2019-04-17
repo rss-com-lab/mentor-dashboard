@@ -18,7 +18,7 @@ class LoginButton extends Component {
   render() {
     return (
       <Button
-        variant="outlined"
+        variant="contained"
         className="login-button"
         onClick={this.handleClick}
       >
