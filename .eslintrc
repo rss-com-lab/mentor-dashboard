@@ -1,7 +1,8 @@
 {
   "extends": ["airbnb", "prettier/react"],
   "env": {
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "plugins": ["prettier"],
   "rules": {
@@ -17,7 +18,9 @@
     "no-underscore-dangle": 0,
     "import/imports-first": ["error", "absolute-first"],
     "import/newline-after-import": "error",
-    "react/prefer-stateless-function": "off"
+    "react/prefer-stateless-function": "off",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "react/forbid-prop-types": "off"
   },
   "globals": {
     "window": true,

@@ -36,7 +36,13 @@ class HeaderSelect extends Component {
   componentDidMount = () => {
     const { mentorsList } = this.state;
 
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((firebaseUser = {}) => {
+      let user = firebaseUser;
+
+      if (user === null) {
+        user = { displayName: 'Need signing' };
+      }
+
       const mentorFromStorage = localStorage.getItem('currentMentor');
       const mentor = isMentor(user.displayName, mentorsList);
 

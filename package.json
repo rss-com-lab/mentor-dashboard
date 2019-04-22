@@ -4,8 +4,9 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.3",
-    "bootstrap": "^4.3.1",
+    "@material-ui/icons": "^3.0.2",
     "firebase": "^5.9.1",
+    "formik": "^1.5.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
@@ -17,11 +18,13 @@
     "read-excel-file": "^2.0.7",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "xlsx": "^0.14.1"
+    "xlsx": "^0.14.1",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "lint:fix": "./node_modules/.bin/eslint --debug --fix",
+    "lint:fix-all": "eslint 'src/**/*.js'",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "process": "node ./src/indexScript.js",
@@ -40,8 +43,15 @@
       "git add"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rss-com-lab/mentor-dashboard.git"
+  },
   "author": "petriken",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rss-com-lab/mentor-dashboard/issues"
+  },
   "homepage": ".",
   "eslintConfig": {
     "extends": "react-app"

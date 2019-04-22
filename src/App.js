@@ -15,7 +15,7 @@ import {
 } from 'react-router-dom';
 
 import Dashboard from './components/Dashboard/Dashboard';
-import Form from './components/Form/Form';
+import MentorForm from './components/Form/MentorForm';
 import './App.scss';
 
 /* We give each route either a target `component`,
@@ -32,7 +32,7 @@ const App = () => (
       {/* <Link to={{pathname: '/form'}}>Form</Link>{' '} */}
       <Switch>
         <Route exact path="/" component={Dashboard} />
-        <Route path="/form" component={Form} />
+        <Route path="/form" component={MentorForm} />
         <Route render={() => <h1>Page not found</h1>} />
       </Switch>
       {/* <Footer />
