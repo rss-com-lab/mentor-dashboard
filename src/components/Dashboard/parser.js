@@ -17,10 +17,6 @@ function getTaskURL(name, dataObj) {
   return dataObj.tasksStatus[name].taskLink;
 }
 
-function getCheckTaskTime(name, dataObj) {
-  return dataObj.tasksStatus[name].checkTaskTime;
-}
-
 function getStatistics(name, dataObj) {
   const commonCountTask = dataObj.taskCount;
   const countCurrentTask = dataObj.tasksStatus[name].taskCount;
@@ -77,26 +73,6 @@ function setTooltip(mentor, studentName, dataObj) {
   const studentsStatus = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
   const { reasonDismiss } = dataObj.mentors[mentor].mentorStudents[studentName];
   return studentsStatus === 'dismissed' ? reasonDismiss : null;
-}
-
-function getPrTask(studentName, mentor, currentTaskName, dataObj) {
-  const pr = dataObj.mentors[mentor].mentorStudents[studentName].prLinks[
-    currentTaskName
-  ];
-  const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
-
-  if (
-    getTaskStatus(currentTaskName, dataObj) === 'Checking'
-    && (score <= 0 || !score)
-  ) {
-    return '#';
-  }
-
-  if (!score || score === 0) {
-    return null;
-  }
-
-  return pr;
 }
 
 function getCurrentMentor(mentor) {
@@ -169,6 +145,26 @@ function setStudent(mentor, dataObj) {
   ));
 }
 
+function getMentorGithub(mentor, dataObj) {
+  const githubMentor = dataObj.mentors[mentor].Github;
+  return githubMentor;
+}
+
+function AlertUserData(mentor, student, task, score) {
+  function onClick(e) {
+    e.preventDefault();
+    alert(
+      `github mentor: ${mentor}\ngithub student: ${student}\ntask name: ${task}`,
+    );
+  }
+
+  return (
+    <a href="onClick" className="link" onClick={onClick} rel="noopener noreferrer">
+      {score}
+    </a>
+  );
+}
+
 function setScore(mentor, name, dataObj) {
   return getStudent(mentor, dataObj).map(studentName => (
     <td
@@ -176,14 +172,12 @@ function setScore(mentor, name, dataObj) {
       className={setClass(studentName, mentor, name, dataObj)}
       key={studentName}
     >
-      <a
-        className="link"
-        rel="noopener noreferrer"
-        target="_blank"
-        href={getPrTask(studentName, getCurrentMentor(mentor), name, dataObj)}
-      >
-        {getScore(studentName, getCurrentMentor(mentor), name, dataObj)}
-      </a>
+       {AlertUserData(
+         getMentorGithub(getCurrentMentor(mentor), dataObj),
+         getStudenName(studentName, getCurrentMentor(mentor), dataObj),
+         name,
+         getScore(studentName, getCurrentMentor(mentor), name, dataObj),
+       )}
     </td>
   ));
 }
@@ -201,12 +195,6 @@ function setTask(mentor, dataObj) {
         >
           {name}
         </a>
-      </td>
-      <td
-        className={getTaskStatus(name, dataObj)}
-        style={{ textAlign: 'center' }}
-      >
-        {getCheckTaskTime(name, dataObj)}
       </td>
       <td
         className={getTaskStatus(name, dataObj)}
