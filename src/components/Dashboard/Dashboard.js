@@ -79,7 +79,6 @@ class Dashboard extends React.Component {
                   <thead>
                     <tr>
                       <td />
-                      <td className="check_time cell ">check time</td>
                       <td className="statistics cell">statistics</td>
                       {setStudent(selectedOption, database)}
                     </tr>
