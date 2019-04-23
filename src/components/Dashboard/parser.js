@@ -177,12 +177,23 @@ function AlertUserData(mentor, studentName, name, score, prTask, studentsStatus)
       </a>
     );
   }
-  if (studentsStatus.includes('dismissed')) {
+  if (!+score.replace(/\D+/g, '') > 0 && studentsStatus.includes('dismissed')) {
     return (
       <span style={{ cursor: 'default' }}
       >
         {score}
       </span>
+    );
+  }
+  if (+score.replace(/\D+/g, '') > 0 && studentsStatus.includes('dismissed')) {
+    return (
+      <a className="link"
+        rel="noopener noreferrer"
+        target="_blank"
+        href={prTask}
+      >
+        {score}
+      </a>
     );
   }
   return (
