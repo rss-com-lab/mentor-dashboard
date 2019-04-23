@@ -36,7 +36,8 @@ function getStudenName(studentName, mentor, dataObj) {
 
 function getScore(studentName, mentor, currentTaskName, dataObj) {
   const studentsStatus = dataObj;
-  const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
+  const score
+    = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
 
   if (score) {
     return `✅ ${score}`;
@@ -70,7 +71,8 @@ function getScore(studentName, mentor, currentTaskName, dataObj) {
 }
 
 function setTooltip(mentor, studentName, dataObj) {
-  const studentsStatus = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
+  const studentsStatus
+    = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
   const { reasonDismiss } = dataObj.mentors[mentor].mentorStudents[studentName];
   return studentsStatus === 'dismissed' ? reasonDismiss : null;
 }
@@ -103,8 +105,9 @@ const getStudent = (mentor, dataObj) => {
 };
 
 function setClass(studentName, mentor, name, dataObj) {
-  const studentsStatus = dataObj.mentors[getCurrentMentor(mentor)].mentorStudents[studentName]
-    .studentStatus;
+  const studentsStatus
+    = dataObj.mentors[getCurrentMentor(mentor)].mentorStudents[studentName]
+      .studentStatus;
 
   if (
     getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ '
@@ -159,7 +162,12 @@ function AlertUserData(mentor, student, task, score) {
   }
 
   return (
-    <a href="onClick" className="link" onClick={onClick} rel="noopener noreferrer">
+    <a
+      href="onClick"
+      className="link"
+      onClick={onClick}
+      rel="noopener noreferrer"
+    >
       {score}
     </a>
   );
@@ -172,12 +180,12 @@ function setScore(mentor, name, dataObj) {
       className={setClass(studentName, mentor, name, dataObj)}
       key={studentName}
     >
-       {AlertUserData(
-         getMentorGithub(getCurrentMentor(mentor), dataObj),
-         getStudenName(studentName, getCurrentMentor(mentor), dataObj),
-         name,
-         getScore(studentName, getCurrentMentor(mentor), name, dataObj),
-       )}
+      {AlertUserData(
+        getMentorGithub(getCurrentMentor(mentor), dataObj),
+        getStudenName(studentName, getCurrentMentor(mentor), dataObj),
+        name,
+        getScore(studentName, getCurrentMentor(mentor), name, dataObj),
+      )}
     </td>
   ));
 }
