@@ -62,7 +62,7 @@ class Dashboard extends React.Component {
             mentorDataObj={mentorDataObj}
             database={database}
           />
-          {database ? (
+          {database && mentorDataObj ? (
             <Fragment>
               <table className="table mentor-table">
                 <thead className="thead">

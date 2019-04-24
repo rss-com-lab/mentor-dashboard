@@ -20,7 +20,7 @@ class Header extends Component {
       <div className="navbar-container">
         <nav className="navbar">
           <Logo link="/" brandName="RSS Community Lab" />
-          {database ? (
+          {database && mentorDataObj ? (
             <HeaderSelect
               placeholder="github account"
               handleInput={handleInput}
@@ -29,9 +29,9 @@ class Header extends Component {
               mentorDataObj={mentorDataObj}
               database={database}
             />
-          ) : (
+          ) : mentorDataObj && !database ? (
             <CircularProgress disableShrink />
-          )}
+          ) : !mentorDataObj && database ? null : null}
           {mentorDataObj ? (
             <UserInfo mentorDataObj={mentorDataObj} />
           ) : (
