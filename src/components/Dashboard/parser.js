@@ -75,6 +75,15 @@ function setTooltip(mentor, studentName, dataObj) {
   return studentsStatus === 'dismissed' ? reasonDismiss : null;
 }
 
+function getPrTask(studentName, mentor, currentTaskName, dataObj) {
+  const pr = dataObj.mentors[mentor].mentorStudents[studentName].prLinks[currentTaskName];
+  const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
+  if (getTaskStatus(currentTaskName, dataObj) === 'Checking' && (score <= 0 || !score)) {
+    return '#';
+  }
+  return pr;
+}
+
 function getCurrentMentor(mentor) {
   if (localStorage.getItem('currentMentor')) {
     currentMentor = localStorage.getItem('currentMentor');
@@ -150,14 +159,43 @@ function getMentorGithub(mentor, dataObj) {
   return githubMentor;
 }
 
-function AlertUserData(mentor, student, task, score) {
+function AlertUserData(mentor, studentName, name, score, prTask, studentsStatus) {
   function onClick(e) {
     e.preventDefault();
     alert(
-      `github mentor: ${mentor}\ngithub student: ${student}\ntask name: ${task}`,
+      `github mentor: ${mentor}\ngithub student: ${studentName}\ntask name: ${name}`,
     );
   }
-
+  if (+score.replace(/\D+/g, '') > 0 && !studentsStatus.includes('dismissed')) {
+    return (
+      <a className="link"
+        rel="noopener noreferrer"
+        target="_blank"
+        href={prTask}
+      >
+        {score}
+      </a>
+    );
+  }
+  if (!+score.replace(/\D+/g, '') > 0 && studentsStatus.includes('dismissed')) {
+    return (
+      <span style={{ cursor: 'default' }}
+      >
+        {score}
+      </span>
+    );
+  }
+  if (+score.replace(/\D+/g, '') > 0 && studentsStatus.includes('dismissed')) {
+    return (
+      <a className="link"
+        rel="noopener noreferrer"
+        target="_blank"
+        href={prTask}
+      >
+        {score}
+      </a>
+    );
+  }
   return (
     <a href="onClick" className="link" onClick={onClick} rel="noopener noreferrer">
       {score}
@@ -177,6 +215,8 @@ function setScore(mentor, name, dataObj) {
          getStudenName(studentName, getCurrentMentor(mentor), dataObj),
          name,
          getScore(studentName, getCurrentMentor(mentor), name, dataObj),
+         getPrTask(studentName, getCurrentMentor(mentor), name, dataObj),
+         setClass(studentName, mentor, name, dataObj),
        )}
     </td>
   ));
