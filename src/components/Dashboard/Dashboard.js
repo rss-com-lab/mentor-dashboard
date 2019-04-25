@@ -20,9 +20,22 @@ class Dashboard extends React.Component {
     this.database = firebase
       .database()
       .ref()
-      .child('JSONData');
+      .child('2019Q1');
+
+    this.admins = firebase
+      .database()
+      .ref()
+      .child('Admins');
+
+    this.mentors = firebase
+      .database()
+      .ref()
+      .child('mentors');
 
     this.state = {
+      admins: null,
+      mentors: null,
+      userStatus: null,
       selectedOption: null,
       database: null,
       mentorDataObj: null,
@@ -34,14 +47,47 @@ class Dashboard extends React.Component {
       if (user) {
         this.setState({
           mentorDataObj: user,
+          selectedOption: { value: user.displayName, label: user.displayName },
+        });
+
+        this.admins.on('value', (snap) => {
+          this.setState({
+            admins: snap.val(),
+          });
+        });
+
+        this.mentors.on('value', (snap) => {
+          this.setState({
+            mentors: snap.val(),
+          });
+        });
+
+        this.database.on('value', (snap) => {
+          const { admins, mentors } = this.state;
+          const currUser = user.displayName;
+          if (admins.includes(currUser)) {
+            this.setState({
+              database: snap.val(),
+            });
+            this.setState({
+              userStatus: 'admin',
+            });
+          } else if (mentors.includes(currUser)) {
+            const data = {};
+            data.mentors = {};
+            data.mentors[currUser] = snap.child(`mentors/${currUser}`).val();
+            data.tasksStatus = snap.child('tasksStatus').val();
+            data.taskCount = snap.child('taskCount').val();
+
+            this.setState({
+              database: data,
+            });
+            this.setState({
+              userStatus: 'mentor',
+            });
+          }
         });
       }
-    });
-
-    this.database.on('value', (snap) => {
-      this.setState({
-        database: snap.val(),
-      });
     });
   };
 
@@ -52,7 +98,14 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { selectedOption, mentorDataObj, database } = this.state;
+    const {
+      selectedOption,
+      mentorDataObj,
+      database,
+      userStatus,
+      mentors,
+      admins,
+    } = this.state;
 
     return (
       <Fragment>
@@ -63,8 +116,11 @@ class Dashboard extends React.Component {
             getMentorList={getMentorList}
             mentorDataObj={mentorDataObj}
             database={database}
+            mentors={mentors}
+            admins={admins}
+            userStatus={userStatus}
           />
-          {database && mentorDataObj ? (
+          {database && mentorDataObj && selectedOption ? (
             <Fragment>
               <table className="table mentor-table">
                 <thead className="thead">
