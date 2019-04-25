@@ -21,7 +21,8 @@ const styles = {
     marginRight: 20,
   },
 };
-const TIMETABLE_LINK = 'https://docs.google.com/spreadsheets/d/1oM2O8DtjC0HodB3j7hcIResaWBw8P18tXkOl1ymelvE/edit#gid=0';
+const TIMETABLE_LINK
+  = 'https://docs.google.com/spreadsheets/d/1oM2O8DtjC0HodB3j7hcIResaWBw8P18tXkOl1ymelvE/edit#gid=0';
 function ButtonAppBar(props) {
   const { classes, mentorDataObj } = props;
   return (
@@ -31,10 +32,13 @@ function ButtonAppBar(props) {
           <Logo link="/" brandName="RSS Community Lab" />
 
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            <Button style={{ marginLeft: 20 }} variant="contained" href={TIMETABLE_LINK} >
+            <Button
+              style={{ marginLeft: 20 }}
+              variant="contained"
+              href={TIMETABLE_LINK}
+            >
               Timetable
             </Button>
-
           </Typography>
 
           {mentorDataObj ? (

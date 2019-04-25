@@ -1,4 +1,3 @@
-
 export const tasks = {
   HTML_CSS_TEST: {
     title: 'HTML/CSS Test',

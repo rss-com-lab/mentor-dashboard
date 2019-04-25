@@ -2,7 +2,6 @@ import React from 'react';
 import Select from 'react-select';
 import './Form.scss';
 
-
 class Form extends React.Component {
   render() {
     return (

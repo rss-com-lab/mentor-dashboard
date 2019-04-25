@@ -51,7 +51,10 @@ class HeaderSelect extends Component {
         localStorage.removeItem('currentMentor');
       } else if (mentorFromStorage) {
         this.setState({
-          selectedOption: { value: mentorFromStorage, label: mentorFromStorage },
+          selectedOption: {
+            value: mentorFromStorage,
+            label: mentorFromStorage,
+          },
         });
       }
     });

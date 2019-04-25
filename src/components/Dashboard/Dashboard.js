@@ -9,6 +9,8 @@ import Header from '../Header/Header';
 
 import FireBase from '../../firebase/firebase';
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 FireBase.init();
 
 class Dashboard extends React.Component {
@@ -18,9 +20,22 @@ class Dashboard extends React.Component {
     this.database = firebase
       .database()
       .ref()
-      .child('JSONData');
+      .child('2019Q1');
+
+    this.admins = firebase
+      .database()
+      .ref()
+      .child('Admins');
+
+    this.mentors = firebase
+      .database()
+      .ref()
+      .child('mentors');
 
     this.state = {
+      admins: null,
+      mentors: null,
+      userStatus: null,
       selectedOption: null,
       database: null,
       mentorDataObj: null,
@@ -33,13 +48,50 @@ class Dashboard extends React.Component {
         this.setState({
           mentorDataObj: user,
         });
-      }
-    });
 
-    this.database.on('value', (snap) => {
-      this.setState({
-        database: snap.val(),
-      });
+        this.admins.on('value', (snap) => {
+          this.setState({
+            admins: snap.val(),
+          });
+        });
+
+        this.mentors.on('value', (snap) => {
+          this.setState({
+            mentors: snap.val(),
+          });
+        });
+
+        this.database.on('value', (snap) => {
+          const { admins, mentors } = this.state;
+          const currUser = user.displayName;
+          if (admins.includes(currUser)) {
+            const storageUser = localStorage.getItem('currentMentor');
+            this.setState({
+              database: snap.val(),
+            });
+            this.setState({
+              userStatus: 'admin',
+            });
+            this.handleInput(storageUser);
+          } else if (mentors.includes(currUser)) {
+            const data = {};
+            data.mentors = {};
+            data.mentors[currUser] = snap.child(`mentors/${currUser}`).val();
+            data.tasksStatus = snap.child('tasksStatus').val();
+            data.taskCount = snap.child('taskCount').val();
+
+            this.setState({
+              database: data,
+            });
+            this.setState({
+              userStatus: 'mentor',
+            });
+            this.setState({
+              selectedOption: { value: currUser, label: currUser },
+            });
+          }
+        });
+      }
     });
   };
 
@@ -50,7 +102,14 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { selectedOption, mentorDataObj, database } = this.state;
+    const {
+      selectedOption,
+      mentorDataObj,
+      database,
+      userStatus,
+      mentors,
+      admins,
+    } = this.state;
 
     return (
       <Fragment>
@@ -61,8 +120,15 @@ class Dashboard extends React.Component {
             getMentorList={getMentorList}
             mentorDataObj={mentorDataObj}
             database={database}
+            mentors={mentors}
+            admins={admins}
+            userStatus={userStatus}
           />
-          {database ? (
+          {database
+          && mentorDataObj
+          && selectedOption
+          && (admins.includes(selectedOption.value)
+            || mentors.includes(selectedOption.value)) ? (
             <Fragment>
               <table className="table mentor-table">
                 <thead className="thead">
@@ -148,7 +214,7 @@ class Dashboard extends React.Component {
                 </tbody>
               </table>
             </Fragment>
-          ) : null}
+            ) : null}
         </div>
       </Fragment>
     );

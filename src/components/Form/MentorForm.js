@@ -30,7 +30,6 @@ import FromAppBar from './AppBar';
 // need to create config for the form action
 // implement score validation and submit
 
-
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -59,10 +58,10 @@ const initFormValues = {
   task: '',
 };
 
-
 // center the paper sheets
 // add menu with links to timetable
-const FormSubmit = ({ children }) => <div>
+const FormSubmit = ({ children }) => (
+  <div>
     <h1>Student evaluation</h1>
     <Formik
       initialValues={initFormValues}
@@ -84,13 +83,25 @@ const FormSubmit = ({ children }) => <div>
         document.getElementById('test').innerHTML = `
         <form style="display: none;" id="custom_form" action="https://docs.google.com/forms/d/e/1FAIpQLSfrZbkG-7DoCRNqKgv4yif-okXUpE48cl5u_mm9liVojss0fg/formResponse"
       method="post" target="hidden_iframe" class="form-container js-feedback-form">
-    <input type="text" name="entry.607635829" data-text="task" value='${values.task}' class="input bold js-input js-input-plain-text">
+    <input type="text" name="entry.607635829" data-text="task" value='${
+      values.task
+    }' class="input bold js-input js-input-plain-text">
     <input type="text" name="entry.105639297" data-text="action" value='Выставить оценку'>
-    <input type="text" name="entry.1124799417" data-text="student" value='${values.studentGithub}'>
-    <input type="text" name="entry.1551603391" data-text="mentor" value='${values.mentorGithub}'>
-    <input type="text" name="entry.2068938522" data-text="pr" value='${values.prGithub}'>
-    <input type="text" name="entry.429903389" data-text="mark" value="${values.mark}">
-    <input type="text" name="entry.307148344" data-text="comment" value='${values.comment}'>
+    <input type="text" name="entry.1124799417" data-text="student" value='${
+      values.studentGithub
+    }'>
+    <input type="text" name="entry.1551603391" data-text="mentor" value='${
+      values.mentorGithub
+    }'>
+    <input type="text" name="entry.2068938522" data-text="pr" value='${
+      values.prGithub
+    }'>
+    <input type="text" name="entry.429903389" data-text="mark" value="${
+      values.mark
+    }">
+    <input type="text" name="entry.307148344" data-text="comment" value='${
+      values.comment
+    }'>
     <button type="submit" id="submit" class="btn btn-primary js-btn-submit">submit</button>
 </form>
 
@@ -98,7 +109,6 @@ const FormSubmit = ({ children }) => <div>
         
         
         `;
-
 
         window.submitForm = () => {
           document.getElementById('custom_form').submit.click();
@@ -124,47 +134,61 @@ const FormSubmit = ({ children }) => <div>
       }) => {
         const tasksSelectOptions = getSelectOptions(tasks);
 
-        const evaluation = <React.Fragment>
-          <TextField
-            id="task"
-            select
-
-            // className={classes.textField}
-            // value={this.state.currency}
-            // onChange={this.handleChange('currency')}
-            SelectProps={{
-              native: true,
-            }}
-            helperText="Выберете название таска"
-            margin="normal"
-            onChange={(...args) => {
-              console.log('change select', args);
-              handleChange(...args);
-            }}
-            onBlur={handleBlur}
-            value={values.task}
-          >
-            <option value="" label="Выберете название таска" />
-            {tasksSelectOptions.map(option => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </TextField>
-          <TextField
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.prGithub} required id="prGithub" label="Ссылка на проверенный пул реквест" fullWidth />
-          <TextField
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required value={values.mark} id="mark" label="Оценка" fullWidth />
-          <TextField
-            onChange={handleChange}
-            onBlur={handleBlur}
-            id="comment" value={values.comment} label="Комментарий" fullWidth />
-
-        </React.Fragment>;
+        const evaluation = (
+          <React.Fragment>
+            <TextField
+              id="task"
+              select
+              // className={classes.textField}
+              // value={this.state.currency}
+              // onChange={this.handleChange('currency')}
+              SelectProps={{
+                native: true,
+              }}
+              helperText="Выберете название таска"
+              margin="normal"
+              onChange={(...args) => {
+                console.log('change select', args);
+                handleChange(...args);
+              }}
+              onBlur={handleBlur}
+              value={values.task}
+            >
+              <option value="" label="Выберете название таска" />
+              {tasksSelectOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.prGithub}
+              required
+              id="prGithub"
+              label="Ссылка на проверенный пул реквест"
+              fullWidth
+            />
+            <TextField
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+              value={values.mark}
+              id="mark"
+              label="Оценка"
+              fullWidth
+            />
+            <TextField
+              onChange={handleChange}
+              onBlur={handleBlur}
+              id="comment"
+              value={values.comment}
+              label="Комментарий"
+              fullWidth
+            />
+          </React.Fragment>
+        );
 
         const currencies = [
           {
@@ -185,68 +209,89 @@ const FormSubmit = ({ children }) => <div>
           },
         ];
 
+        const expel = (
+          <React.Fragment>
+            Отчислить
+            <TextField
+              id="standard-select-currency-native"
+              select
+              label="Причина отчисления"
+              // className={classes.textField}
+              // value={this.state.currency}
+              // onChange={this.handleChange('currency')}
+              SelectProps={{
+                native: true,
+              }}
+              helperText="Выберете причину отчисления"
+              margin="normal"
+            >
+              {currencies.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
+          </React.Fragment>
+        );
 
-        const expel = <React.Fragment>
-          Отчислить
+        return (
+          <form onSubmit={handleSubmit}>
+            {errors.mentorGithub && touched.mentorGithub && errors.mentorGithub}
+            {errors.studentGithub &&
+              touched.studentGithub &&
+              errors.studentGithub}
+            {errors.prGithub && touched.prGithub && errors.prGithub}
+            {errors.mark && touched.mark && errors.mark}
+            {errors.task && touched.task && errors.task}
+            <TextField
+              required
+              id="mentorGithub"
+              label="Ссылка на GitHub ментора в формате: https://github.com/nickname"
+              fullWidth
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.mentorGithub}
+            />
+            <TextField
+              required
+              id="studentGithub"
+              style={{ paddingBottom: 20 }}
+              label="Ссылка на GitHub студента в формате: https://github.com/nickname"
+              fullWidth
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.studentGithub}
+            />
+            {/* {JSON.stringify(children, 0, 2)} */}
+            <SimpleTabs
+              classes={{ root: 'tab-root' }}
+              item1={evaluation}
+              item2={expel}
+              item3="оставить фидбек"
+            />
 
-          <TextField
-            id="standard-select-currency-native"
-            select
-            label="Причина отчисления"
-            // className={classes.textField}
-            // value={this.state.currency}
-            // onChange={this.handleChange('currency')}
-            SelectProps={{
-              native: true,
-            }}
-            helperText="Выберете причину отчисления"
-            margin="normal"
-          >
-            {currencies.map(option => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </TextField>
-        </React.Fragment>;
+            {/* <input */}
+            {/*  type="url" */}
+            {/*  name="studentGithub" */}
+            {/*  onChange={handleChange} */}
+            {/*  onBlur={handleBlur} */}
+            {/*  value={values.studentGithub} */}
+            {/* /> */}
 
-        return <form onSubmit={handleSubmit}>
-          {errors.mentorGithub && touched.mentorGithub && errors.mentorGithub}
-          {errors.studentGithub && touched.studentGithub && errors.studentGithub}
-          {errors.prGithub && touched.prGithub && errors.prGithub}
-          {errors.mark && touched.mark && errors.mark}
-          {errors.task && touched.task && errors.task}
-          <TextField required id="mentorGithub" label="Ссылка на GitHub ментора в формате: https://github.com/nickname" fullWidth onChange={handleChange}
-                     onBlur={handleBlur}
-                     value={values.mentorGithub}/>
-          <TextField required id="studentGithub" style={{ paddingBottom: 20 }} label="Ссылка на GitHub студента в формате: https://github.com/nickname" fullWidth onChange={handleChange}
-                     onBlur={handleBlur}
-                     value={values.studentGithub}/>
-          {/* {JSON.stringify(children, 0, 2)} */}
-          <SimpleTabs classes={{ root: 'tab-root' }}
-                      item1={evaluation}
-                      item2={expel}
-                      item3="оставить фидбек"
-          />
-
-
-          {/* <input */}
-          {/*  type="url" */}
-          {/*  name="studentGithub" */}
-          {/*  onChange={handleChange} */}
-          {/*  onBlur={handleBlur} */}
-          {/*  value={values.studentGithub} */}
-          {/* /> */}
-
-
-          <Button type="submit" disabled={isSubmitting} variant="contained" color="primary">
-            Submit
-          </Button>
-        </form>;
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+          </form>
+        );
       }}
     </Formik>
-  </div>;
-
+  </div>
+);
 
 class SimpleTabs extends React.Component {
   state = {
@@ -258,9 +303,7 @@ class SimpleTabs extends React.Component {
   };
 
   render() {
-    const {
-      classes, item1, item2, item3,
-    } = this.props;
+    const { classes, item1, item2, item3 } = this.props;
     const { value } = this.state;
 
     return (
@@ -301,27 +344,19 @@ const theme = createMuiTheme({
 function MentorForm() {
   //
   return (
-    <MuiThemeProvider
-      theme={
-        theme
-      }
-    >
+    <MuiThemeProvider theme={theme}>
       <React.Fragment>
-        <FromAppBar/>
+        <FromAppBar />
 
         <PaperSheet>
           <Typography variant="h5" gutterBottom>
             Score RSSchool 2019Q1
           </Typography>
 
-          <FormSubmit>
-
-          </FormSubmit>
+          <FormSubmit />
         </PaperSheet>
-
       </React.Fragment>
     </MuiThemeProvider>
-
   );
 }
 

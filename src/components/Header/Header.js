@@ -15,23 +15,28 @@ class Header extends Component {
       getMentorList,
       mentorDataObj,
       database,
+      admins,
+      mentors,
+      userStatus,
     } = this.props;
     return (
       <div className="navbar-container">
         <nav className="navbar">
           <Logo link="/" brandName="RSS Community Lab" />
-          {database ? (
+          {database && mentorDataObj && userStatus === 'admin' ? (
             <HeaderSelect
               placeholder="github account"
               handleInput={handleInput}
               selectedOption={selectedOption}
               getMentorList={getMentorList}
               mentorDataObj={mentorDataObj}
+              admins={admins}
+              mentors={mentors}
               database={database}
             />
-          ) : (
+          ) : mentorDataObj && !database ? (
             <CircularProgress disableShrink />
-          )}
+          ) : !mentorDataObj && database ? null : null}
           {mentorDataObj ? (
             <UserInfo mentorDataObj={mentorDataObj} />
           ) : (
