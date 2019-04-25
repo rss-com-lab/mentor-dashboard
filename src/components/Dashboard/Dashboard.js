@@ -9,6 +9,8 @@ import Header from '../Header/Header';
 
 import FireBase from '../../firebase/firebase';
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 FireBase.init();
 
 class Dashboard extends React.Component {
