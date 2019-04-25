@@ -47,7 +47,6 @@ class Dashboard extends React.Component {
       if (user) {
         this.setState({
           mentorDataObj: user,
-          selectedOption: { value: user.displayName, label: user.displayName },
         });
 
         this.admins.on('value', (snap) => {
@@ -66,12 +65,14 @@ class Dashboard extends React.Component {
           const { admins, mentors } = this.state;
           const currUser = user.displayName;
           if (admins.includes(currUser)) {
+            const storageUser = localStorage.getItem('currentMentor');
             this.setState({
               database: snap.val(),
             });
             this.setState({
               userStatus: 'admin',
             });
+            this.handleInput(storageUser);
           } else if (mentors.includes(currUser)) {
             const data = {};
             data.mentors = {};
@@ -84,6 +85,9 @@ class Dashboard extends React.Component {
             });
             this.setState({
               userStatus: 'mentor',
+            });
+            this.setState({
+              selectedOption: { value: currUser, label: currUser },
             });
           }
         });
@@ -120,7 +124,11 @@ class Dashboard extends React.Component {
             admins={admins}
             userStatus={userStatus}
           />
-          {database && mentorDataObj && selectedOption ? (
+          {database
+          && mentorDataObj
+          && selectedOption
+          && (admins.includes(selectedOption.value)
+            || mentors.includes(selectedOption.value)) ? (
             <Fragment>
               <table className="table mentor-table">
                 <thead className="thead">
@@ -206,7 +214,7 @@ class Dashboard extends React.Component {
                 </tbody>
               </table>
             </Fragment>
-          ) : null}
+            ) : null}
         </div>
       </Fragment>
     );
