@@ -17,11 +17,24 @@ function getTaskURL(name, dataObj) {
   return dataObj.tasksStatus[name].taskLink;
 }
 
+function getCountActiveTask(dataObj) {
+  const listTasks = Object.keys(dataObj.tasksStatus);
+  const countActiveTask = [];
+  listTasks.forEach((item) => {
+    const countCurrentTask = dataObj.tasksStatus[item].taskCount;
+    if (countCurrentTask > 0) {
+      countActiveTask.push(item);
+    }
+  });
+  return countActiveTask.length;
+}
+
 function getStatistics(name, dataObj) {
-  const commonCountTask = dataObj.taskCount;
+  const countActiveTask = getCountActiveTask(dataObj);
+  // 630 - count students in 2 stage 2019Q1
+  const commonCountTask = countActiveTask <= 3 ? 630 : dataObj.taskCount;
   const countCurrentTask = dataObj.tasksStatus[name].taskCount;
   const percent = (countCurrentTask / commonCountTask) * 100;
-
   return percent > 0 ? `${Math.round(percent)} %` : null;
 }
 
