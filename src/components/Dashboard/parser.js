@@ -192,6 +192,7 @@ function AlertUserData(
 ) {
   function onClick(e) {
     e.preventDefault();
+    // eslint-disable-next-line no-alert
     alert(
       `github mentor: ${mentor}\ngithub student: ${studentName}\ntask name: ${name}`,
     );
@@ -256,7 +257,19 @@ function setScore(mentor, name, dataObj) {
 
 function setTask(mentor, dataObj) {
   const tasks = Object.keys(dataObj.tasksStatus);
-  return tasks.map(name => (
+  const tasksDates = [];
+  tasks.forEach(item => tasksDates.push({
+    date: Date.parse(dataObj.tasksStatus[item].taskDate), task: item,
+  }));
+
+  function numericCompare(a, b) {
+    return a.date - b.date;
+  }
+
+  tasksDates.sort(numericCompare);
+  const sortTasks = tasksDates.map(item => item.task);
+
+  return sortTasks.map(name => (
     <tr key={name}>
       <td className={getTaskStatus(name, dataObj)}>
         <a
