@@ -17,11 +17,24 @@ function getTaskURL(name, dataObj) {
   return dataObj.tasksStatus[name].taskLink;
 }
 
+function getCountActiveTask(dataObj) {
+  const listTasks = Object.keys(dataObj.tasksStatus);
+  const countActiveTask = [];
+  listTasks.forEach((item) => {
+    const countCurrentTask = dataObj.tasksStatus[item].taskCount;
+    if (countCurrentTask > 0) {
+      countActiveTask.push(item);
+    }
+  });
+  return countActiveTask.length;
+}
+
 function getStatistics(name, dataObj) {
-  const commonCountTask = dataObj.taskCount;
+  const countActiveTask = getCountActiveTask(dataObj);
+  // 630 - count students in 2 stage 2019Q1
+  const commonCountTask = countActiveTask <= 3 ? 630 : dataObj.taskCount;
   const countCurrentTask = dataObj.tasksStatus[name].taskCount;
   const percent = (countCurrentTask / commonCountTask) * 100;
-
   return percent > 0 ? `${Math.round(percent)} %` : null;
 }
 
@@ -179,6 +192,7 @@ function AlertUserData(
 ) {
   function onClick(e) {
     e.preventDefault();
+    // eslint-disable-next-line no-alert
     alert(
       `github mentor: ${mentor}\ngithub student: ${studentName}\ntask name: ${name}`,
     );
@@ -243,7 +257,19 @@ function setScore(mentor, name, dataObj) {
 
 function setTask(mentor, dataObj) {
   const tasks = Object.keys(dataObj.tasksStatus);
-  return tasks.map(name => (
+  const tasksDates = [];
+  tasks.forEach(item => tasksDates.push({
+    date: Date.parse(dataObj.tasksStatus[item].taskDate), task: item,
+  }));
+
+  function numericCompare(a, b) {
+    return a.date - b.date;
+  }
+
+  tasksDates.sort(numericCompare);
+  const sortTasks = tasksDates.map(item => item.task);
+
+  return sortTasks.map(name => (
     <tr key={name}>
       <td className={getTaskStatus(name, dataObj)}>
         <a

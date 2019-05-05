@@ -125,95 +125,95 @@ class Dashboard extends React.Component {
             userStatus={userStatus}
           />
           {database
-          && mentorDataObj
-          && selectedOption
-          && (admins.includes(selectedOption.value)
-            || mentors.includes(selectedOption.value)) ? (
-            <Fragment>
-              <table className="table mentor-table">
-                <thead className="thead">
-                  <tr>
-                    <td className="mentorTitle">Ментор</td>
-                    <td className="mentorName">
-                      {getCurrentMentor(selectedOption)}
-                    </td>
-                  </tr>
-                </thead>
-              </table>
-              <div className="wrapper">
-                <table align="center" className="table task-table">
-                  <thead>
+            && mentorDataObj
+            && selectedOption
+            && (admins.includes(selectedOption.value)
+              || mentors.includes(selectedOption.value)) ? (
+              <Fragment>
+                <table className="table mentor-table">
+                  <thead className="thead">
                     <tr>
-                      <td />
-                      <td className="statistics cell">statistics</td>
-                      {setStudent(selectedOption, database)}
+                      <td className="mentorTitle">Ментор</td>
+                      <td className="mentorName">
+                        {getCurrentMentor(selectedOption)}
+                      </td>
                     </tr>
                   </thead>
-                  <tbody>{setTask(selectedOption, database)}</tbody>
                 </table>
-              </div>
+                <div className="wrapper">
+                  <table align="center" className="table task-table">
+                    <thead>
+                      <tr>
+                        <td />
+                        <td className="statistics cell">statistics</td>
+                        {setStudent(selectedOption, database)}
+                      </tr>
+                    </thead>
+                    <tbody>{setTask(selectedOption, database)}</tbody>
+                  </table>
+                </div>
 
-              <table className="table description-table">
-                <tbody className="tbody">
-                  <tr>
-                    <td className="Checked description-table__cell" />
-                    <td className="description-table__cell">
-                      <span role="img" aria-label="checked">
-                        ✅{' '}
-                      </span>
-                      Checked by mentor
+                <table className="table description-table">
+                  <tbody className="tbody">
+                    <tr>
+                      <td className="Checked description-table__cell" />
+                      <td className="description-table__cell">
+                        <span role="img" aria-label="checked">
+                          ✅{' '}
+                        </span>
+                        Checked by mentor
                     </td>
-                  </tr>
-                  <tr>
-                    <td className="Checking description-table__cell" />
-                    <td className="description-table__cell">
-                      <span role="img" aria-label="checking">
-                        🕓{' '}
-                      </span>
-                      Checking by mentor
+                    </tr>
+                    <tr>
+                      <td className="Checking description-table__cell" />
+                      <td className="description-table__cell">
+                        <span role="img" aria-label="checking">
+                          🕓{' '}
+                        </span>
+                        Checking by mentor
                     </td>
-                  </tr>
-                  <tr>
-                    <td className="InProgress description-table__cell" />
-                    <td className="description-table__cell">
-                      <span role="img" aria-label="fire">
-                        🔨{' '}
-                      </span>
-                      In Progress
+                    </tr>
+                    <tr>
+                      <td className="InProgress description-table__cell" />
+                      <td className="description-table__cell">
+                        <span role="img" aria-label="fire">
+                          🔨{' '}
+                        </span>
+                        In Progress
                     </td>
-                  </tr>
-                  <tr>
-                    <td className="ToDo description-table__cell" />
-                    <td className="description-table__cell">
-                      <span role="img" aria-label="to-do">
-                        🔜{' '}
-                      </span>
-                      ToDo
+                    </tr>
+                    <tr>
+                      <td className="ToDo description-table__cell" />
+                      <td className="description-table__cell">
+                        <span role="img" aria-label="to-do">
+                          🔜{' '}
+                        </span>
+                        ToDo
                     </td>
-                  </tr>
-                  <tr>
-                    <td className="failed description-table__cell" />
-                    <td className="description-table__cell">
-                      <span role="img" aria-label="fail">
-                        ⛔{' '}
-                      </span>
-                      No solution
+                    </tr>
+                    <tr>
+                      <td className="failed description-table__cell" />
+                      <td className="description-table__cell">
+                        <span role="img" aria-label="fail">
+                          ⛔{' '}
+                        </span>
+                        No solution
                     </td>
-                  </tr>
-                  <tr>
-                    <td className="dismissed description-table__cell">
-                      semitransparent student -{' '}
+                    </tr>
+                    <tr>
+                      <td className="dismissed description-table__cell">
+                        semitransparent student -{' '}
+                      </td>
+                      <td className="description-table__cell">
+                        <span role="img" aria-label="dismiss">
+                          {' '}
+                        </span>{' '}
+                        student dismissed
                     </td>
-                    <td className="description-table__cell">
-                      <span role="img" aria-label="dismiss">
-                        {' '}
-                      </span>{' '}
-                      student dismissed
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </Fragment>
+                    </tr>
+                  </tbody>
+                </table>
+              </Fragment>
             ) : null}
         </div>
       </Fragment>
