@@ -1,6 +1,11 @@
 import React, { Fragment } from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import {
   getMentorList, getCurrentMentor, setStudent, setTask,
 } from './parser';
@@ -103,12 +108,7 @@ class Dashboard extends React.Component {
 
   render() {
     const {
-      selectedOption,
-      mentorDataObj,
-      database,
-      userStatus,
-      mentors,
-      admins,
+      selectedOption, mentorDataObj, database, userStatus, mentors, admins,
     } = this.state;
 
     return (
@@ -125,95 +125,92 @@ class Dashboard extends React.Component {
             userStatus={userStatus}
           />
           {database
-            && mentorDataObj
-            && selectedOption
-            && (admins.includes(selectedOption.value)
-              || mentors.includes(selectedOption.value)) ? (
-              <Fragment>
-                <table className="table mentor-table">
-                  <thead className="thead">
-                    <tr>
-                      <td className="mentorTitle">Ментор</td>
-                      <td className="mentorName">
-                        {getCurrentMentor(selectedOption)}
-                      </td>
-                    </tr>
-                  </thead>
-                </table>
-                <div className="wrapper">
-                  <table align="center" className="table task-table">
-                    <thead>
-                      <tr>
-                        <td />
-                        <td className="statistics cell">statistics</td>
-                        {setStudent(selectedOption, database)}
-                      </tr>
-                    </thead>
-                    <tbody>{setTask(selectedOption, database)}</tbody>
-                  </table>
-                </div>
+          && mentorDataObj
+          && selectedOption
+          && (admins.includes(selectedOption.value) || mentors.includes(selectedOption.value)) ? (
+            <Fragment>
+              <Table className="table mentor-table">
+                <TableHead className="thead">
+                  <TableRow>
+                    <TableCell className="mentorTitle">Ментор</TableCell>
+                    <TableCell className="mentorName">{getCurrentMentor(selectedOption)}</TableCell>
+                  </TableRow>
+                </TableHead>
+              </Table>
+              <div className="wrapper">
+                <Table className="table task-table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell />
+                      <TableCell className="statistics cell">statistics</TableCell>
+                      {setStudent(selectedOption, database)}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>{setTask(selectedOption, database)}</TableBody>
+                </Table>
+              </div>
 
-                <table className="table description-table">
-                  <tbody className="tbody">
-                    <tr>
-                      <td className="Checked description-table__cell" />
-                      <td className="description-table__cell">
-                        <span role="img" aria-label="checked">
-                          ✅{' '}
-                        </span>
-                        Checked by mentor
-                    </td>
-                    </tr>
-                    <tr>
-                      <td className="Checking description-table__cell" />
-                      <td className="description-table__cell">
-                        <span role="img" aria-label="checking">
-                          🕓{' '}
-                        </span>
-                        Checking by mentor
-                    </td>
-                    </tr>
-                    <tr>
-                      <td className="InProgress description-table__cell" />
-                      <td className="description-table__cell">
-                        <span role="img" aria-label="fire">
-                          🔨{' '}
-                        </span>
-                        In Progress
-                    </td>
-                    </tr>
-                    <tr>
-                      <td className="ToDo description-table__cell" />
-                      <td className="description-table__cell">
-                        <span role="img" aria-label="to-do">
-                          🔜{' '}
-                        </span>
-                        ToDo
-                    </td>
-                    </tr>
-                    <tr>
-                      <td className="failed description-table__cell" />
-                      <td className="description-table__cell">
-                        <span role="img" aria-label="fail">
-                          ⛔{' '}
-                        </span>
-                        No solution
-                    </td>
-                    </tr>
-                    <tr>
-                      <td className="dismissed description-table__cell">
-                        semitransparent student -{' '}
-                      </td>
-                      <td className="description-table__cell">
-                        <span role="img" aria-label="dismiss">
-                          {' '}
-                        </span>{' '}
-                        student dismissed
-                    </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Fragment>
+              <Table className="table description-table">
+                <TableBody className="tbody">
+                  <TableRow>
+                    <TableCell className="Checked description-table__cell" />
+                    <TableCell className="description-table__cell">
+                      <span role="img" aria-label="checked">
+                        ✅{' '}
+                      </span>
+                      Checked by mentor
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="Checking description-table__cell" />
+                    <TableCell className="description-table__cell">
+                      <span role="img" aria-label="checking">
+                        🕓{' '}
+                      </span>
+                      Checking by mentor
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="InProgress description-table__cell" />
+                    <TableCell className="description-table__cell">
+                      <span role="img" aria-label="fire">
+                        🔨{' '}
+                      </span>
+                      In Progress
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="ToDo description-table__cell" />
+                    <TableCell className="description-table__cell">
+                      <span role="img" aria-label="to-do">
+                        🔜{' '}
+                      </span>
+                      ToDo
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="failed description-table__cell" />
+                    <TableCell className="description-table__cell">
+                      <span role="img" aria-label="fail">
+                        ⛔{' '}
+                      </span>
+                      No solution
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="dismissed description-table__cell">
+                      semitransparent -{' '}
+                    </TableCell>
+                    <TableCell className="description-table__cell">
+                      <span role="img" aria-label="dismiss">
+                        {' '}
+                      </span>{' '}
+                      student dismissed
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Fragment>
             ) : null}
         </div>
       </Fragment>

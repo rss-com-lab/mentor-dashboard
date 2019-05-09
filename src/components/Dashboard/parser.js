@@ -1,6 +1,21 @@
 import React from 'react';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 
 let currentMentor = '';
+
+const LightTooltip = withStyles(theme => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.92)',
+    boxShadow: theme.shadows[1],
+    fontSize: '0.9rem',
+    textAlign: 'center',
+    maxWidth: 150,
+  },
+}))(Tooltip);
 
 function getMentorList(dataObj) {
   const mentorsList = [];
@@ -49,8 +64,7 @@ function getStudenName(studentName, mentor, dataObj) {
 
 function getScore(studentName, mentor, currentTaskName, dataObj) {
   const studentsStatus = dataObj;
-  const score
-    = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
+  const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
 
   if (score) {
     return `✅ ${score}`;
@@ -73,10 +87,7 @@ function getScore(studentName, mentor, currentTaskName, dataObj) {
   if (!score && getTaskStatus(currentTaskName, dataObj) === 'ToDo') {
     return '🔜 ';
   }
-  if (
-    getTaskStatus(currentTaskName, dataObj) === 'Checked'
-    && studentsStatus !== 'dismissed'
-  ) {
+  if (getTaskStatus(currentTaskName, dataObj) === 'Checked' && studentsStatus !== 'dismissed') {
     return '⛔ ';
   }
 
@@ -84,23 +95,23 @@ function getScore(studentName, mentor, currentTaskName, dataObj) {
 }
 
 function setTooltip(mentor, studentName, dataObj) {
-  const studentsStatus
-    = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
+  const studentsStatus = dataObj.mentors[mentor].mentorStudents[studentName].studentStatus;
   const { reasonDismiss } = dataObj.mentors[mentor].mentorStudents[studentName];
-  return studentsStatus === 'dismissed' ? reasonDismiss : null;
+
+  if (studentsStatus === 'dismissed') {
+    return (
+      <LightTooltip title={reasonDismiss} aria-label="reasonDismiss">
+        <span className="tooltip">{studentName}</span>
+      </LightTooltip>
+    );
+  }
+  return studentName;
 }
 
 function getPrTask(studentName, mentor, currentTaskName, dataObj) {
-  const pr
-    = dataObj.mentors[mentor].mentorStudents[studentName].prLinks[
-      currentTaskName
-    ];
-  const score
-    = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
-  if (
-    getTaskStatus(currentTaskName, dataObj) === 'Checking'
-    && (score <= 0 || !score)
-  ) {
+  const pr = dataObj.mentors[mentor].mentorStudents[studentName].prLinks[currentTaskName];
+  const score = dataObj.mentors[mentor].mentorStudents[studentName].tasks[currentTaskName];
+  if (getTaskStatus(currentTaskName, dataObj) === 'Checking' && (score <= 0 || !score)) {
     return '#';
   }
   return pr;
@@ -135,8 +146,7 @@ const getStudent = (mentor, dataObj) => {
 
 function setClass(studentName, mentor, name, dataObj) {
   const studentsStatus
-    = dataObj.mentors[getCurrentMentor(mentor)].mentorStudents[studentName]
-      .studentStatus;
+    = dataObj.mentors[getCurrentMentor(mentor)].mentorStudents[studentName].studentStatus;
 
   if (
     getScore(studentName, getCurrentMentor(mentor), name, dataObj) === '⛔ '
@@ -160,20 +170,17 @@ function setClass(studentName, mentor, name, dataObj) {
 
 function setStudent(mentor, dataObj) {
   return getStudent(mentor, dataObj).map(studentName => (
-    <td
-      className="studentName cell"
-      key={studentName}
-      tooltip={setTooltip(getCurrentMentor(mentor), studentName, dataObj)}
-    >
+    <TableCell className="studentName cell" key={studentName}>
       <a
         className="link"
         rel="noopener noreferrer"
         target="_blank"
         href={getStudenName(studentName, getCurrentMentor(mentor), dataObj)}
       >
-        {studentName}
+        {' '}
+        {setTooltip(getCurrentMentor(mentor), studentName, dataObj)}
       </a>
-    </td>
+    </TableCell>
   ));
 }
 
@@ -182,29 +189,15 @@ function getMentorGithub(mentor, dataObj) {
   return githubMentor;
 }
 
-function AlertUserData(
-  mentor,
-  studentName,
-  name,
-  score,
-  prTask,
-  studentsStatus,
-) {
+function AlertUserData(mentor, studentName, name, score, prTask, studentsStatus) {
   function onClick(e) {
     e.preventDefault();
     // eslint-disable-next-line no-alert
-    alert(
-      `github mentor: ${mentor}\ngithub student: ${studentName}\ntask name: ${name}`,
-    );
+    alert(`github mentor: ${mentor}\ngithub student: ${studentName}\ntask name: ${name}`);
   }
   if (+score.replace(/\D+/g, '') > 0 && !studentsStatus.includes('dismissed')) {
     return (
-      <a
-        className="link"
-        rel="noopener noreferrer"
-        target="_blank"
-        href={prTask}
-      >
+      <a className="link" rel="noopener noreferrer" target="_blank" href={prTask}>
         {score}
       </a>
     );
@@ -214,23 +207,13 @@ function AlertUserData(
   }
   if (+score.replace(/\D+/g, '') > 0 && studentsStatus.includes('dismissed')) {
     return (
-      <a
-        className="link"
-        rel="noopener noreferrer"
-        target="_blank"
-        href={prTask}
-      >
+      <a className="link" rel="noopener noreferrer" target="_blank" href={prTask}>
         {score}
       </a>
     );
   }
   return (
-    <a
-      href="onClick"
-      className="link"
-      onClick={onClick}
-      rel="noopener noreferrer"
-    >
+    <a href="onClick" className="link" onClick={onClick} rel="noopener noreferrer">
       {score}
     </a>
   );
@@ -238,11 +221,7 @@ function AlertUserData(
 
 function setScore(mentor, name, dataObj) {
   return getStudent(mentor, dataObj).map(studentName => (
-    <td
-      style={{ textAlign: 'center' }}
-      className={setClass(studentName, mentor, name, dataObj)}
-      key={studentName}
-    >
+    <TableCell className={setClass(studentName, mentor, name, dataObj)} key={studentName}>
       {AlertUserData(
         getMentorGithub(getCurrentMentor(mentor), dataObj),
         getStudenName(studentName, getCurrentMentor(mentor), dataObj),
@@ -251,7 +230,7 @@ function setScore(mentor, name, dataObj) {
         getPrTask(studentName, getCurrentMentor(mentor), name, dataObj),
         setClass(studentName, mentor, name, dataObj),
       )}
-    </td>
+    </TableCell>
   ));
 }
 
@@ -259,7 +238,8 @@ function setTask(mentor, dataObj) {
   const tasks = Object.keys(dataObj.tasksStatus);
   const tasksDates = [];
   tasks.forEach(item => tasksDates.push({
-    date: Date.parse(dataObj.tasksStatus[item].taskDate), task: item,
+    date: Date.parse(dataObj.tasksStatus[item].taskDate),
+    task: item,
   }));
 
   function numericCompare(a, b) {
@@ -270,8 +250,8 @@ function setTask(mentor, dataObj) {
   const sortTasks = tasksDates.map(item => item.task);
 
   return sortTasks.map(name => (
-    <tr key={name}>
-      <td className={getTaskStatus(name, dataObj)}>
+    <TableRow key={name}>
+      <TableCell className={getTaskStatus(name, dataObj)}>
         <a
           className="link taskname"
           rel="noopener noreferrer"
@@ -280,15 +260,10 @@ function setTask(mentor, dataObj) {
         >
           {name}
         </a>
-      </td>
-      <td
-        className={getTaskStatus(name, dataObj)}
-        style={{ textAlign: 'center' }}
-      >
-        {getStatistics(name, dataObj)}
-      </td>
+      </TableCell>
+      <TableCell className={getTaskStatus(name, dataObj)}>{getStatistics(name, dataObj)}</TableCell>
       {setScore(mentor, name, dataObj)}
-    </tr>
+    </TableRow>
   ));
 }
 
